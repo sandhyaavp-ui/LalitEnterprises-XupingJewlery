@@ -32,6 +32,7 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -115,6 +116,20 @@ USE_TZ = True
 STATIC_URL = 'static/'
 STATICFILES_DIRS = [BASE_DIR / 'static']
 STATIC_ROOT = BASE_DIR / 'staticfiles'
+
+# Django 5.1+ reads storage backends from STORAGES, not the old
+# STATICFILES_STORAGE setting (which is a no-op on this Django version —
+# it's been removed, not just deprecated). Only the 'staticfiles' entry is
+# changed here; 'default' is left as Django's own default so file uploads
+# (ImageFields etc.) are unaffected.
+STORAGES = {
+    'default': {
+        'BACKEND': 'django.core.files.storage.FileSystemStorage',
+    },
+    'staticfiles': {
+        'BACKEND': 'whitenoise.storage.CompressedManifestStaticFilesStorage',
+    },
+}
 
 # Media files (user-uploaded product/collection/blog images)
 MEDIA_URL = 'media/'
