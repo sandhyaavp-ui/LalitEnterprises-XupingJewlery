@@ -1,0 +1,108 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Book a Video Call — Xuping Jewellery{% endblock %}
+
+{% block content %}
+<section class="hero">
+    <div class="container">
+        <p class="eyebrow">1-on-1 Consultation</p>
+        <h1>Book a wholesale video call.</h1>
+        <p>See our everyday-wear collection live, ask about MOQ and MOP for
+           your basket, and get genuine wholesale pricing — from an authorised
+           Xuping agent in Chennai.</p>
+    </div>
+</section>
+
+<div class="video-call-layout">
+
+    <div id="video-call-wizard">
+        <div class="wizard-progress">
+            <div class="wizard-step is-active">
+                <div class="step-badge">1</div><span>Your details</span>
+            </div>
+            <div class="wizard-step">
+                <div class="step-badge">2</div><span>Pick a slot</span>
+            </div>
+            <div class="wizard-step">
+                <div class="step-badge">3</div><span>Confirmation</span>
+            </div>
+        </div>
+
+        <!-- Step 1 -->
+        <div class="wizard-panel is-active form-wrapper">
+            <h3>Tell us about you</h3>
+            <div class="form-group">
+                <label for="wiz-full-name">Full name</label>
+                <input id="wiz-full-name" class="form-control" type="text" placeholder="e.g. Diya">
+            </div>
+            <div class="form-group">
+                <label for="wiz-location">Location</label>
+                <input id="wiz-location" class="form-control" type="text" placeholder="e.g. Chennai - Tamil Nadu">
+            </div>
+            <div class="form-group">
+                <label for="wiz-phone">Phone / WhatsApp</label>
+                <input id="wiz-phone" class="form-control" type="tel" inputmode="numeric" maxlength="10" placeholder="e.g. 9876543210">
+            </div>
+            <div class="form-group">
+                <label>
+                    <input type="checkbox" id="wiz-agree">
+                    I understand and agree to Xuping Jewellery's <strong>MOQ</strong>
+                    (Minimum Order Quantity of 6pcs of each design) and
+                    <strong>MOP</strong> (Minimum Order Amount of ₹20,000) policy for
+                    wholesale orders.
+                </label>
+            </div>
+            <button id="wiz-step1-next" class="btn btn-primary">Next</button>
+        </div>
+
+        <!-- Step 2 -->
+        <div class="wizard-panel form-wrapper">
+            <h3>Pick a slot</h3>
+            <div class="form-group">
+                <label for="wiz-date">Preferred date</label>
+                <input id="wiz-date" class="form-control" type="date">
+            </div>
+            <div class="form-group">
+                <label>Preferred time</label>
+                <div class="slot-grid" id="wiz-slot-grid"></div>
+            </div>
+            <div class="wizard-actions">
+                <button id="wiz-step2-back" class="btn btn-outline">Back</button>
+                <button id="wiz-step2-next" class="btn btn-primary">Next</button>
+            </div>
+        </div>
+
+        <!-- Step 3 -->
+        <div class="wizard-panel form-wrapper" id="wiz-confirm-panel">
+            <h3>Confirm your details</h3>
+            <dl class="wizard-summary">
+                <dt>Name</dt><dd id="wiz-summary-name"></dd>
+                <dt>Location</dt><dd id="wiz-summary-location"></dd>
+                <dt>Phone</dt><dd id="wiz-summary-phone"></dd>
+                <dt>Date</dt><dd id="wiz-summary-date"></dd>
+                <dt>Time</dt><dd id="wiz-summary-time"></dd>
+            </dl>
+            <div class="wizard-actions">
+                <button id="wiz-step3-back" class="btn btn-outline">Back</button>
+                <button id="wiz-confirm-btn" class="btn btn-primary">Confirm booking</button>
+            </div>
+        </div>
+    </div>
+
+    <section class="section" style="padding-top:0">
+        <h2>Your calls</h2>
+        <p>Upcoming and past video consultations.</p>
+        <div class="my-calls-tabs">
+            <button class="my-calls-tab is-active" data-target="my-calls-upcoming">Upcoming</button>
+            <button class="my-calls-tab" data-target="my-calls-history">History</button>
+        </div>
+        <div class="my-calls-panel" id="my-calls-upcoming"></div>
+        <div class="my-calls-panel" id="my-calls-history" style="display:none"></div>
+    </section>
+
+</div>
+{% endblock %}
+
+{% block extra_scripts %}
+<script src="{% static 'js/wizard.js' %}"></script>
+{% endblock %}

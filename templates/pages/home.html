@@ -1,0 +1,218 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Xuping Jewellery — Authentic Xuping Jewellery Wholesale{% endblock %}
+
+{% block content %}
+
+<section class="hero">
+    <div class="container">
+        <p class="eyebrow">Authorised Xuping Agent · Chennai</p>
+        <h1>Authentic Xuping jewellery, at <em>genuine wholesale prices</em>.</h1>
+        <p>Everyday-wear imitation jewellery for resellers, boutique owners and retailers across India. Built on trust, consistency, and long-term reseller relationships.</p>
+        <a href="{% url 'inquiries:video_call_booking' %}" class="btn btn-primary">Book a Video Call</a>
+        <form action="{% url 'catalog:search' %}" method="get" class="hero-search">
+            <input type="text" name="q" class="form-control" placeholder="Search designs, collections...">
+            <button type="submit" class="btn btn-primary">Search</button>
+        </form>
+    </div>
+</section>
+
+<section class="section">
+    <div class="about-grid">
+        <div class="about-image-col">
+            <p class="eyebrow">About Us</p>
+            <h2>A trusted bridge between Xuping and India's reseller network.</h2>
+            <img src="{% static 'images/about-model.jpg' %}" alt="Model wearing everyday Xuping gold-plated jewellery" data-aos="fade-right">
+        </div>
+        <div class="about-text-col" data-aos="fade-left">
+            <p>Xuping Jewellery is an authorised Xuping jewellery agent based in
+               Chennai, supplying wholesale everyday-wear imitation jewellery to
+               resellers, boutique owners and retailers across India.</p>
+            <p>We're built on trust, authenticity, and consistent stock quality —
+               long-standing relationships with resellers who value reliability
+               and fair wholesale pricing over one-off retail transactions.</p>
+            <p>We're a genuine bridge between Xuping's manufacturing and India's
+               reseller network, with the kind of personal attention — like
+               1-on-1 video call consultations — that larger suppliers simply
+               don't offer.</p>
+        </div>
+    </div>
+</section>
+
+<section class="section section-cream">
+    <div class="container">
+        <h2 class="section-title">Made for daily wear, priced for resale.</h2>
+        <div class="card-grid">
+            {% for collection in collections %}
+            <a href="{% url 'catalog:collection_detail' slug=collection.slug %}" class="card" data-aos="zoom-in" data-aos-delay="{% widthratio forloop.counter0 1 50 %}">
+                {% if collection.image %}
+                <img src="{{ collection.image.url }}" alt="{{ collection.name }}">
+                {% else %}
+                <div class="card-image-placeholder"></div>
+                {% endif %}
+                <h3>{{ collection.name }}</h3>
+                <span class="card-link">View designs →</span>
+            </a>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+<section class="section" data-aos="fade-up">
+    <div class="container">
+        <h2 class="section-title">Built for the wholesale buyer.</h2>
+        <div class="card-grid">
+            <div class="card" data-aos="zoom-in" data-aos-delay="0">
+                <div class="card-icon">
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M21 12V7H5a2 2 0 0 1 0-4h14v4"/>
+                        <path d="M3 5v14a2 2 0 0 0 2 2h16v-5"/>
+                        <path d="M18 12a2 2 0 0 0 0 4h4v-4Z"/>
+                    </svg>
+                </div>
+                <h3>Genuine wholesale pricing</h3>
+                <p>Reseller-first rates — no retail markup, no middlemen.</p>
+            </div>
+            <div class="card" data-aos="zoom-in" data-aos-delay="50">
+                <div class="card-icon">
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10Z"/>
+                        <path d="m9 12 2 2 4-4"/>
+                    </svg>
+                </div>
+                <h3>Authorised Xuping stock</h3>
+                <p>Every piece is traceable and consistent across reorders.</p>
+            </div>
+            <div class="card" data-aos="zoom-in" data-aos-delay="100">
+                <div class="card-icon">
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M13 2 3 14h8l-1 8 10-12h-8l1-8Z"/>
+                    </svg>
+                </div>
+                <h3>Flexible MOQ</h3>
+                <p>Start small, scale up. We work with new and established resellers.</p>
+            </div>
+            <div class="card" data-aos="zoom-in" data-aos-delay="150">
+                <div class="card-icon">
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M1 3h15v13H1z"/>
+                        <path d="M16 8h4l3 3v5h-7V8Z"/>
+                        <circle cx="5.5" cy="18.5" r="2.5"/>
+                        <circle cx="18.5" cy="18.5" r="2.5"/>
+                    </svg>
+                </div>
+                <h3>Fast dispatch from Chennai</h3>
+                <p>Confirmed orders ship within 24–48 hours pan-India.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="section section-cream" data-aos="fade-up">
+    <div class="container">
+        <h2 class="section-title">Three simple steps.</h2>
+        <div class="card-grid">
+            <div class="card" data-aos="zoom-in" data-aos-delay="0">
+                <span class="step-badge">1</span>
+                <h3>Browse the collection</h3>
+                <p>Explore our everyday collection.</p>
+            </div>
+            <div class="card" data-aos="zoom-in" data-aos-delay="50">
+                <span class="step-badge">2</span>
+                <h3>WhatsApp or video call</h3>
+                <p>We share live pricing, help you build a mixed order, and answer MOQ / MOP questions.</p>
+            </div>
+            <div class="card" data-aos="zoom-in" data-aos-delay="100">
+                <span class="step-badge">3</span>
+                <h3>Confirm your bulk order</h3>
+                <p>Pay and confirm — your order dispatches from Chennai within 24–48 hours.</p>
+            </div>
+        </div>
+        <div class="actions-row">
+            <a href="https://wa.me/919841066880" target="_blank" rel="noopener" class="btn btn-primary">WhatsApp us</a>
+            <a href="{% url 'inquiries:video_call_booking' %}" class="btn btn-outline">Book a call</a>
+        </div>
+    </div>
+</section>
+
+<section class="section">
+    <div class="container stats-grid" data-aos="fade-up">
+        <div>
+            <div class="stat-number" data-countup="2002">0</div>
+            <p>Since</p>
+        </div>
+        <div>
+            <div class="stat-number" data-countup="1000" data-suffix="+">0</div>
+            <p>Designs Available</p>
+        </div>
+        <div>
+            <div class="stat-number" data-countup="35" data-suffix="+">0</div>
+            <p>Cities Served</p>
+        </div>
+    </div>
+</section>
+
+<section class="section section-cream" data-aos="fade-up">
+    <div class="container">
+        <h2 class="section-title">Questions resellers ask us.</h2>
+        <div class="faq-list">
+            <div class="faq-item">
+                <button class="faq-question">
+                    What is your minimum order quantity and minimum order amount?
+                    <span class="faq-icon">+</span>
+                </button>
+                <div class="faq-answer">
+                    <p>When you place a wholesale order with us, you need to order at least 6 pieces of each design, or the packing of design — for example, 6 pieces of the same bali. Your total order across all designs also needs to add up to at least ₹20,000. This minimum helps us keep our prices low and genuinely wholesale, since we're not selling single pieces at retail rates.</p>
+                </div>
+            </div>
+            <div class="faq-item">
+                <button class="faq-question">
+                    How do I place a wholesale order?
+                    <span class="faq-icon">+</span>
+                </button>
+                <div class="faq-answer">
+                    <p>It's simple. First, browse through our Everyday Collections on this website to see what designs are available. Once you know what you like, just message us on WhatsApp or book a short video call with us. On that call or chat, we'll show you live pricing, help you decide how many pieces of each design to order, and answer any questions about minimum quantities. Once everything is finalized, you confirm the order and make payment, and we get it packed and shipped to you.</p>
+                </div>
+            </div>
+            <div class="faq-item">
+                <button class="faq-question">
+                    What payment methods do you accept?
+                    <span class="faq-icon">+</span>
+                </button>
+                <div class="faq-answer">
+                    <p>We keep payments simple and accessible — you can pay us through UPI (like Google Pay, PhonePe, or any UPI app), a direct bank transfer, or WhatsApp Pay. We'll share the exact payment details with you once your order is finalized, and your order will only be dispatched once payment is received and confirmed.</p>
+                </div>
+            </div>
+            <div class="faq-item">
+                <button class="faq-question">
+                    How long does dispatch/delivery take?
+                    <span class="faq-icon">+</span>
+                </button>
+                <div class="faq-answer">
+                    <p>Once your order is confirmed and paid for, we pack and ship it from our Chennai location within 24 to 48 hours. From there, delivery time depends on your location in India, but we work with reliable courier partners to make sure your order reaches you as quickly as possible, anywhere in the country.</p>
+                </div>
+            </div>
+            <div class="faq-item">
+                <button class="faq-question">
+                    Do you ship pan-India?
+                    <span class="faq-icon">+</span>
+                </button>
+                <div class="faq-answer">
+                    <p>Yes, absolutely. No matter which city or state you're in across India, we can ship your wholesale order to you. We regularly work with resellers, boutique owners, and retailers from all over the country.</p>
+                </div>
+            </div>
+            <div class="faq-item">
+                <button class="faq-question">
+                    Can I see products on a video call before ordering?
+                    <span class="faq-icon">+</span>
+                </button>
+                <div class="faq-answer">
+                    <p>Yes, and we actually recommend it! You can book a free 1-on-1 video call with our team, where we'll show you the actual jewellery pieces live on camera — you can see the exact finish, color, weight, and size before you decide to order. This way, you know precisely what you're getting, which is especially helpful if you're ordering for the first time or want to see a specific design up close.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+{% endblock %}

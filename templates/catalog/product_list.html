@@ -1,0 +1,66 @@
+{% extends 'base.html' %}
+{% block title %}Products — Xuping Jewellery{% endblock %}
+
+{% block content %}
+<section class="hero">
+    <div class="container">
+        <p class="eyebrow">Our Collections</p>
+        <h1>Our Collections</h1>
+        <p>Browse our everyday-wear collections. Each design ships at a minimum of 6 pcs.</p>
+    </div>
+</section>
+
+<section class="section">
+    <div class="container">
+        <div class="card-grid">
+            {% for collection in collections %}
+            <a href="{% url 'catalog:collection_detail' slug=collection.slug %}" class="card" data-aos="zoom-in" data-aos-delay="{% widthratio forloop.counter0 1 50 %}">
+                {% if collection.image %}
+                <img src="{{ collection.image.url }}" alt="{{ collection.name }}">
+                {% else %}
+                <div class="card-image-placeholder"></div>
+                {% endif %}
+                <h3>{{ collection.name }}</h3>
+                <span class="card-link">View designs →</span>
+            </a>
+            {% empty %}
+            <p>No collections available yet.</p>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+<section class="section container">
+    <h2 class="section-title">All designs.</h2>
+    <p class="text-center">{{ product_count }} everyday designs across {{ collection_count }} categories.</p>
+
+    <div class="form-group product-search-wrap">
+        <input type="text" id="product-search" class="form-control" placeholder="Search bali, kada, adjustable bracelet...">
+    </div>
+
+    <div class="filter-pills">
+        <button class="filter-pill is-active" data-filter="all">All</button>
+        {% for collection in collections %}
+        <button class="filter-pill" data-filter="{{ collection.slug }}">{{ collection.name }}</button>
+        {% endfor %}
+    </div>
+
+    <div class="card-grid" id="all-products-grid">
+        {% for product in products %}
+        <a href="{% url 'catalog:product_detail' slug=product.slug %}"
+           class="card"
+           data-collection="{{ product.collection.slug }}"
+           data-name="{{ product.name|lower }}">
+            {% if product.image %}
+            <img src="{{ product.image.url }}" alt="{{ product.name }}">
+            {% else %}
+            <div class="card-image-placeholder"></div>
+            {% endif %}
+            <h3>{{ product.name }}</h3>
+        </a>
+        {% empty %}
+        <p>No products available yet.</p>
+        {% endfor %}
+    </div>
+</section>
+{% endblock %}

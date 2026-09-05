@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+{% block title %}{{ collection.name }} Collection — Wholesale | Xuping Jewellery{% endblock %}
+{% block meta_description %}{{ collection.description|default:collection.name|truncatewords:25 }}{% endblock %}
+
+{% block content %}
+<section class="hero">
+    <div class="container">
+        <p class="breadcrumb"><a href="{% url 'catalog:product_list' %}">Products</a> / {{ collection.name }}</p>
+        <h1>{{ collection.name }}</h1>
+        {% if collection.description %}<p>{{ collection.description }}</p>{% endif %}
+    </div>
+</section>
+
+<section class="section">
+    <div class="container">
+        <div class="card-grid">
+            {% for product in products %}
+            <a href="{% url 'catalog:product_detail' slug=product.slug %}" class="card" data-aos="zoom-in" data-aos-delay="{% widthratio forloop.counter0 1 50 %}">
+                {% if product.image %}
+                <img src="{{ product.image.url }}" alt="{{ product.name }}">
+                {% else %}
+                <div class="card-image-placeholder"></div>
+                {% endif %}
+                <h3>{{ product.name }}</h3>
+                <p class="product-moq">MOQ {{ product.moq }} pcs</p>
+                <p class="product-disclaimer">Reference design — real stock, real freshness, confirmed on your call.</p>
+            </a>
+            {% empty %}
+            <p>No products in this collection yet — check back soon, or WhatsApp us for availability.</p>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+{% endblock %}

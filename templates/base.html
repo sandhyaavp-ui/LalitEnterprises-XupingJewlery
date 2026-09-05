@@ -1,0 +1,132 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>{% block title %}Xuping Jewellery — Authorised Wholesale Agent, Chennai{% endblock %}</title>
+<meta name="description" content="{% block meta_description %}Authentic Xuping jewellery at genuine wholesale prices. Everyday-wear imitation jewellery for resellers and retailers across India.{% endblock %}">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700;1,600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css" rel="stylesheet">
+<link rel="stylesheet" href="{% static 'css/style.css' %}">
+<link rel="stylesheet" href="{% static 'css/chatbot.css' %}">
+</head>
+<body>
+
+<header class="site-header">
+    <a href="{% url 'pages:home' %}" class="logo">Xuping <span class="accent">Jewellery</span></a>
+    <button id="nav-toggle" class="nav-toggle" aria-label="Toggle menu" aria-expanded="false">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12h18M3 6h18M3 18h18"/></svg>
+    </button>
+    <ul class="nav-links">
+        <li><a href="{% url 'pages:home' %}" class="{% if request.path == '/' %}is-active{% endif %}">Home</a></li>
+        <li><a href="{% url 'catalog:product_list' %}" class="{% if '/products' in request.path or '/collection/' in request.path %}is-active{% endif %}">Products</a></li>
+        <li><a href="{% url 'pages:blogs' %}" class="{% if '/blogs' in request.path %}is-active{% endif %}">Blogs</a></li>
+        <li><a href="{% url 'inquiries:video_call_booking' %}" class="{% if '/video-call' in request.path %}is-active{% endif %}">Book Video Call</a></li>
+        <li><a href="{% url 'inquiries:contact' %}" class="{% if '/contact' in request.path %}is-active{% endif %}">Contact</a></li>
+    </ul>
+    <a href="{% url 'inquiries:video_call_booking' %}" class="header-video-link" aria-label="Book a video call">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="1" y="5" width="15" height="14" rx="2"/>
+            <path d="m16 10 6-4v12l-6-4"/>
+        </svg>
+    </a>
+</header>
+
+{% if messages %}
+<div class="container">
+    {% for message in messages %}
+    <div class="alert alert-{{ message.tags }}">{{ message }}</div>
+    {% endfor %}
+</div>
+{% endif %}
+
+<main>
+{% block content %}{% endblock %}
+</main>
+
+<footer class="site-footer">
+    <div class="container footer-grid">
+        <div class="footer-col">
+            <h3>Xuping Jewellery</h3>
+            <p>Authorised Xuping wholesale agent in Chennai — everyday-wear imitation jewellery for resellers and retailers across India.</p>
+            <p class="footer-moq">Our Minimum order quantity is 6pcs of each design. Minimum amount of ₹20,000.</p>
+        </div>
+        <div class="footer-col">
+            <h4>Explore</h4>
+            <ul class="footer-links">
+                <li><a href="{% url 'pages:home' %}">Home</a></li>
+                <li><a href="{% url 'catalog:product_list' %}">Products</a></li>
+                <li><a href="{% url 'pages:blogs' %}">Blogs</a></li>
+                <li><a href="{% url 'inquiries:video_call_booking' %}">Book Video Call</a></li>
+                <li><a href="{% url 'inquiries:contact' %}">Contact</a></li>
+                <li><a href="{% url 'pages:terms' %}">Terms of Service</a></li>
+                <li><a href="{% url 'pages:privacy' %}">Privacy Policy</a></li>
+            </ul>
+        </div>
+        <div class="footer-col">
+            <h4>Reach us</h4>
+            <ul class="footer-links">
+                <li><a href="tel:+919841066880">098410 66880</a></li>
+                <li>Chennai, Tamil Nadu</li>
+                <li>Monday to Saturday · 11:00 AM – 6:00 PM</li>
+                <li><a href="https://wa.me/919841066880" target="_blank" rel="noopener">WhatsApp us</a></li>
+            </ul>
+            <address>
+                39/2 EK, Agraharam St, Edapalaiyam, Park Town,<br>
+                Chennai, Greater Chennai, Tamil Nadu 600003
+            </address>
+            <iframe
+                class="footer-map"
+                src="https://www.google.com/maps?q=39/2+EK,+Agraharam+St,+Edapalaiyam,+Park+Town,+Chennai,+Tamil+Nadu+600003&output=embed"
+                loading="lazy"
+                referrerpolicy="no-referrer-when-downgrade">
+            </iframe>
+        </div>
+        <div class="footer-col">
+            <h4>Follow</h4>
+            <ul class="footer-links">
+                <li><a href="https://www.instagram.com/xupingjewelery_india" target="_blank" rel="noopener">Instagram @xupingjewelery_india</a></li>
+                <li><a href="https://wa.me/919841066880" target="_blank" rel="noopener">WhatsApp</a></li>
+            </ul>
+        </div>
+    </div>
+    <div class="container footer-bottom">
+        <p>© 2026 Xuping Jewellery. Authorised Xuping agent, Chennai.</p>
+    </div>
+</footer>
+
+<button id="xj-chat-launcher" aria-label="Chat with us">💬</button>
+<div id="xj-chat-panel">
+    <div class="xj-chat-header">
+        <span>Xuping Assistant</span>
+        <button id="xj-chat-close" aria-label="Close chat">×</button>
+    </div>
+    <div class="xj-chat-body" id="xj-chat-body"></div>
+    <form class="xj-chat-input-row" id="xj-chat-form">
+        <input type="text" id="xj-chat-input" placeholder="Type a message…" autocomplete="off">
+        <button type="submit" aria-label="Send">➤</button>
+    </form>
+</div>
+
+<script src="{% static 'js/chatbot.js' %}"></script>
+<script src="{% static 'js/accordion.js' %}"></script>
+<script src="{% static 'js/countup.js' %}"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
+<script>
+  AOS.init({
+    duration: 700,
+    easing: 'ease-out-cubic',
+    once: true,
+    offset: 80
+  });
+</script>
+<script src="{% static 'js/nav-gsap.js' %}"></script>
+<script src="{% static 'js/mobile-nav.js' %}"></script>
+<script src="{% static 'js/product-filter.js' %}"></script>
+{% block extra_scripts %}{% endblock %}
+</body>
+</html>

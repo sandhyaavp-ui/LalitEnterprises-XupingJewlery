@@ -1,0 +1,158 @@
+/* ==========================================================================
+   Chatbot widget — dark theme version (must load after style.css)
+   ========================================================================== */
+
+#xj-chat-launcher {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background: var(--color-gold);
+  color: var(--color-bg);
+  border: none;
+  box-shadow: var(--shadow-soft);
+  cursor: pointer;
+  font-size: 1.6rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  transition: transform 0.15s ease, background 0.15s ease;
+}
+
+#xj-chat-launcher:hover { background: var(--color-gold-bright); transform: scale(1.05); }
+
+#xj-chat-panel {
+  position: fixed;
+  bottom: 96px;
+  right: 24px;
+  width: 340px;
+  max-width: calc(100vw - 32px);
+  height: 460px;
+  max-height: calc(100vh - 140px);
+  background: var(--color-bg-card);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-soft);
+  display: none;
+  flex-direction: column;
+  overflow: hidden;
+  z-index: 1000;
+  font-family: var(--font-body);
+}
+
+#xj-chat-panel.is-open { display: flex; }
+
+.xj-chat-header {
+  background: var(--color-gold);
+  color: var(--color-bg);
+  padding: 14px 16px;
+  font-family: var(--font-display);
+  font-weight: 700;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.xj-chat-header button {
+  background: none;
+  border: none;
+  color: var(--color-bg);
+  font-size: 1.2rem;
+  cursor: pointer;
+  line-height: 1;
+}
+
+.xj-chat-body {
+  flex: 1;
+  overflow-y: auto;
+  padding: 12px;
+  background: var(--color-bg);
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.xj-msg {
+  max-width: 85%;
+  padding: 8px 12px;
+  border-radius: var(--radius-sm);
+  font-size: 0.9rem;
+  line-height: 1.4;
+}
+
+.xj-msg-bot {
+  background: var(--color-bg-card);
+  border: 1px solid var(--color-border);
+  color: var(--color-text);
+  align-self: flex-start;
+}
+
+.xj-msg-user {
+  background: var(--color-gold);
+  color: var(--color-bg);
+  align-self: flex-end;
+}
+
+.xj-quick-replies {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  align-self: flex-start;
+  max-width: 100%;
+}
+
+.xj-quick-btn {
+  background: var(--color-bg-card);
+  border: 1.5px solid var(--color-gold-dim);
+  color: var(--color-gold);
+  border-radius: var(--radius-pill);
+  padding: 6px 14px;
+  font-size: 0.82rem;
+  cursor: pointer;
+  transition: background 0.15s ease, color 0.15s ease;
+}
+
+.xj-quick-btn:hover { background: var(--color-gold); color: var(--color-bg); }
+
+.xj-chat-input-row {
+  display: flex;
+  border-top: 1px solid var(--color-border);
+  padding: 8px;
+  gap: 6px;
+  background: var(--color-bg-card);
+}
+
+.xj-chat-input-row input {
+  flex: 1;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-pill);
+  padding: 8px 14px;
+  font-family: var(--font-body);
+  font-size: 0.9rem;
+  background: var(--color-bg-alt);
+  color: var(--color-text);
+}
+
+.xj-chat-input-row input::placeholder { color: var(--color-text-muted); }
+.xj-chat-input-row input:focus { outline: none; border-color: var(--color-gold); }
+
+.xj-chat-input-row button {
+  background: var(--color-gold);
+  color: var(--color-bg);
+  border: none;
+  border-radius: 50%;
+  width: 36px;
+  height: 36px;
+  cursor: pointer;
+  flex-shrink: 0;
+}
+
+.xj-chat-input-row button:hover { background: var(--color-gold-bright); }
+
+@media (max-width: 480px) {
+  #xj-chat-panel { right: 16px; left: 16px; width: auto; }
+  #xj-chat-launcher { right: 16px; }
+}

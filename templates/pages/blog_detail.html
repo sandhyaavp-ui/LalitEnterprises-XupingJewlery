@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+{% block title %}{{ post.title }} | Xuping Jewellery{% endblock %}
+{% block meta_description %}{{ post.excerpt|truncatewords:25 }}{% endblock %}
+
+{% block content %}
+<section class="hero">
+    <div class="container">
+        <p class="breadcrumb"><a href="{% url 'pages:blogs' %}">Blogs</a> / {{ post.title }}</p>
+        <h1>{{ post.title }}</h1>
+        <p class="blog-meta">{{ post.published_at|date:"d M Y" }} · {{ post.read_minutes }} min read</p>
+    </div>
+</section>
+
+<section class="section" data-aos="fade-up">
+    <div class="container container-narrow">
+        {% if post.body %}
+        <div>{{ post.body|linebreaks }}</div>
+        {% else %}
+        <p>{{ post.excerpt }}</p>
+        <p class="text-muted">Full article coming soon.</p>
+        {% endif %}
+    </div>
+</section>
+{% endblock %}

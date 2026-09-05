@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+
+<section class="hero hero-fill">
+  <h1>Looks like this design slipped off the shelf.</h1>
+  <p>The page you're looking for doesn't exist — but plenty of authentic Xuping pieces are waiting for you.</p>
+  <a href="{% url 'catalog:product_list' %}" class="btn btn-primary">Browse Collection</a>
+</section>
+
+{% endblock %}

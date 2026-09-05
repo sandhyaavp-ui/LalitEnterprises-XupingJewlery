@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+{% block title %}Search — Xuping Jewellery{% endblock %}
+{% block content %}
+<section class="hero">
+    <div class="container">
+        <p class="eyebrow">Search Results</p>
+        <h1>{{ results|length }} collection{{ results|length|pluralize }} matching "{{ query }}"</h1>
+    </div>
+</section>
+
+<section class="section">
+    <div class="container">
+        {% if results %}
+        <div class="card-grid">
+            {% for collection in results %}
+            <a href="{% url 'catalog:collection_detail' slug=collection.slug %}" class="card">
+                {% if collection.image %}
+                <img src="{{ collection.image.url }}" alt="{{ collection.name }}">
+                {% else %}
+                <div class="card-image-placeholder"></div>
+                {% endif %}
+                <h3>{{ collection.name }}</h3>
+            </a>
+            {% endfor %}
+        </div>
+        {% else %}
+        <p>No collections matched "{{ query }}". Try searching for a category like "Bali", "Ring", or "Chain".</p>
+        {% endif %}
+    </div>
+</section>
+{% endblock %}

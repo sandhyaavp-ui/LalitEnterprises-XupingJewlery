@@ -1,0 +1,5 @@
+{% extends "admin/change_form.html" %}
+{% block content %}
+<script>window.COLLECTION_MOQ_MAP = {{ collection_moq_map|safe }};</script>
+{{ block.super }}
+{% endblock %}

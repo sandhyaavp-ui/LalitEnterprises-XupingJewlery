@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+{% block title %}Blogs — Xuping Jewellery{% endblock %}
+
+{% block content %}
+<section class="hero">
+    <div class="container">
+        <p class="eyebrow">Reseller Journal</p>
+        <h1>Guides for the modern reseller.</h1>
+        <p>Practical playbooks on sourcing, pricing, MOQ policies and building a jewellery reselling business in India.</p>
+    </div>
+</section>
+
+<section class="section">
+    <div class="container">
+        <div class="card-grid blog-grid">
+            {% for post in posts %}
+            <div class="card card-compact" data-aos="zoom-in" data-aos-delay="{% widthratio forloop.counter0 1 50 %}">
+                {% if post.thumbnail %}
+                <img src="{{ post.thumbnail.url }}" alt="{{ post.title }}">
+                {% else %}
+                <div class="card-image-placeholder"></div>
+                {% endif %}
+                <h3><a href="{% url 'pages:blog_detail' slug=post.slug %}" class="card-title-link">{{ post.title }}</a></h3>
+                <p class="card-meta">{{ post.published_at|date:"d M Y" }} · {{ post.read_minutes }} min read</p>
+                <p class="card-excerpt">{{ post.excerpt }}</p>
+                <a href="{% url 'pages:blog_detail' slug=post.slug %}" class="btn btn-outline">Read more</a>
+            </div>
+            {% empty %}
+            <p>New posts are on the way — check back soon.</p>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+{% endblock %}

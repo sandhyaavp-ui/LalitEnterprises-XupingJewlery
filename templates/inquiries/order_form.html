@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+{% block title %}Place a Wholesale Order — Xuping Jewellery{% endblock %}
+
+{% block content %}
+<div class="hero" style="padding-bottom: 0;">
+    <div class="container">
+        <h1>Place a Wholesale Order</h1>
+        <p>List the designs and quantities you'd like. Minimum 6 pcs per design, minimum order value ₹20,000. We'll follow up on WhatsApp to confirm pricing and payment.</p>
+    </div>
+</div>
+
+<section class="section">
+    <div class="container">
+        <div class="form-wrapper" data-aos="fade-up">
+            <form method="post">
+                {% csrf_token %}
+                <h2 class="section-title">Your details</h2>
+                {% for field in form %}
+                <div class="form-group">
+                    <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+                    {{ field }}
+                    {% if field.errors %}<p class="form-error">{{ field.errors|striptags }}</p>{% endif %}
+                </div>
+                {% endfor %}
+
+                <h2 class="section-title">Order items</h2>
+                {{ formset.management_form }}
+                {% if formset.non_form_errors %}<p class="form-error">{{ formset.non_form_errors|striptags }}</p>{% endif %}
+                <div class="order-items">
+                    {% for item_form in formset %}
+                    <div class="order-item-row">
+                        {% for hidden in item_form.hidden_fields %}{{ hidden }}{% endfor %}
+                        {% for field in item_form.visible_fields %}
+                        <div class="form-group">
+                            <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+                            {{ field }}
+                            {% if field.errors %}<p class="form-error">{{ field.errors|striptags }}</p>{% endif %}
+                        </div>
+                        {% endfor %}
+                    </div>
+                    {% endfor %}
+                </div>
+
+                <button type="submit" class="btn btn-primary">Submit Order</button>
+            </form>
+        </div>
+    </div>
+</section>
+{% endblock %}
