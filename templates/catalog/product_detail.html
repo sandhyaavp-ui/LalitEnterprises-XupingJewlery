@@ -59,7 +59,7 @@
 <section class="section container">
   <h2>Recommended For You</h2>
   <p>More from {{ product.collection.name }}.</p>
-  <div class="card-grid">
+  <div class="card-grid product-card-grid">
     {% for item in recommended %}
     <a href="{% url 'catalog:product_detail' slug=item.slug %}" class="card">
       {% if item.image %}

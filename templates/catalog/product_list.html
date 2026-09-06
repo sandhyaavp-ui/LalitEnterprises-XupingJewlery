@@ -45,7 +45,7 @@
         {% endfor %}
     </div>
 
-    <div class="card-grid" id="all-products-grid">
+    <div class="card-grid product-card-grid" id="all-products-grid">
         {% for product in products %}
         <a href="{% url 'catalog:product_detail' slug=product.slug %}"
            class="card"

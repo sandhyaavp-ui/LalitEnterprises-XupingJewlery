@@ -13,7 +13,7 @@
 
 <section class="section">
     <div class="container">
-        <div class="card-grid">
+        <div class="card-grid product-card-grid">
             {% for product in products %}
             <a href="{% url 'catalog:product_detail' slug=product.slug %}" class="card" data-aos="zoom-in" data-aos-delay="{% widthratio forloop.counter0 1 50 %}">
                 {% if product.image %}
