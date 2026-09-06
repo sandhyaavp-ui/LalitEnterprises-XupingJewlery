@@ -758,6 +758,21 @@ textarea.form-control { resize: vertical; min-height: 100px; }
   font-weight: 600;
 }
 
+@media (max-width: 480px) {
+  .hero-search input {
+    padding: 12px 12px;
+    font-size: 0.85rem;
+  }
+
+  .hero-search input::placeholder {
+    font-size: 0.8rem;
+  }
+
+  .hero-search button {
+    padding: 0 16px;
+  }
+}
+
 /* ---- Alerts ---- */
 .alert {
   margin: var(--space-2) 0;
