@@ -17,6 +17,20 @@ ALLOWED_HOSTS = config(
     cast=Csv(),
 )
 
+# Railway terminates TLS at its proxy and forwards plain HTTP to gunicorn,
+# so Django needs this to correctly detect request.is_secure() over HTTPS.
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+
+# Django 4.0+ requires HTTPS origins to be explicitly trusted for
+# same-origin POSTs (admin login, forms) to pass CSRF checks.
+CSRF_TRUSTED_ORIGINS = config(
+    'CSRF_TRUSTED_ORIGINS',
+    default='https://lalitenterprise.in,https://www.lalitenterprise.in,'
+            'https://lalitenterprises-xupingjewlery-production.up.railway.app,'
+            'https://*.railway.app',
+    cast=Csv(),
+)
+
 
 # Application definition
 
