@@ -268,7 +268,7 @@
       panel.classList.toggle('is-open');
       if (!opened) {
         opened = true;
-        addMessage('Hi! I’m the Xuping Jewellery assistant. I can help you browse collections, answer questions, or take your enquiry.', 'bot');
+        addMessage('Hi! I’m the Lalit Enterprises assistant. I can help you browse collections, answer questions, or take your enquiry.', 'bot');
         showMenu();
       }
     });
