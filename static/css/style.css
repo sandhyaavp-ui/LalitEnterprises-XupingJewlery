@@ -528,8 +528,8 @@ textarea.form-control { resize: vertical; min-height: 100px; }
 /* ---- Product cards ---- */
 .product-moq { font-weight: 400; color: var(--color-text-muted); font-size: 0.82rem; margin: 0 0 var(--space-1); }
 
-/* Product grids show 2 per row (1 on very small phones) with a shorter,
-   tighter card than the default .card-grid, since these lists can hold
+/* Product grids show 2 per row at every screen width (cards shrink further
+   below 400px instead of dropping to 1 column), since these lists can hold
    many items. Scoped to .product-card-grid so it never affects the
    collection-tile / feature / blog / contact grids that also use .card-grid. */
 .card-grid.product-card-grid {
@@ -539,6 +539,10 @@ textarea.form-control { resize: vertical; min-height: 100px; }
 
 .product-card-grid .card {
   padding: 14px;
+  /* Without this, the nowrap title's full (untruncated) text width becomes
+     this grid item's min-content size, which forces the 1fr column wider
+     than the grid and overflows the page on narrow phones. */
+  min-width: 0;
 }
 
 .product-card-grid .card img,
@@ -564,8 +568,28 @@ textarea.form-control { resize: vertical; min-height: 100px; }
   overflow: hidden;
 }
 
-@media (max-width: 480px) {
-  .card-grid.product-card-grid { grid-template-columns: repeat(1, 1fr); }
+/* Compact 2-column cards on narrow phones instead of dropping to 1 column */
+@media (max-width: 400px) {
+  .card-grid.product-card-grid {
+    gap: 10px;
+  }
+
+  .card-grid.product-card-grid .card {
+    padding: 10px;
+  }
+
+  .card-grid.product-card-grid .card h3 {
+    font-size: 0.85rem;
+  }
+
+  .card-grid.product-card-grid .product-moq {
+    font-size: 0.72rem;
+  }
+
+  .card-grid.product-card-grid .product-disclaimer {
+    font-size: 0.68rem;
+    -webkit-line-clamp: 2;
+  }
 }
 
 /* ---- Blog cards ---- */
