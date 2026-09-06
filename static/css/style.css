@@ -904,6 +904,10 @@ textarea.form-control { resize: vertical; min-height: 100px; }
   .nav-links li { width: 100%; }
   .nav-links a { display: block; padding: 12px 0; }
   .nav-underline { display: none; } /* underline hover effect is desktop-only */
+
+  .hero h1 { font-size: 1.5rem; line-height: 1.3; }
+  .hero .eyebrow { font-size: 0.7rem; }
+  .hero p { font-size: 0.95rem; }
 }
 
 @media (min-width: 641px) {
