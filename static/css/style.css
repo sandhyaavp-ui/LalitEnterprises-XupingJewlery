@@ -592,6 +592,38 @@ textarea.form-control { resize: vertical; min-height: 100px; }
   }
 }
 
+/* Collection cards (Home + Products page tiles) — same 2-column-at-every-width
+   treatment as .product-card-grid. No MOQ/disclaimer here, just image, name,
+   and the "View designs" .card-link, so there's one less thing to compact. */
+.card-grid.collection-card-grid {
+  grid-template-columns: repeat(2, 1fr);
+  gap: 14px;
+}
+
+.card-grid.collection-card-grid .card {
+  /* See .product-card-grid .card above: needed so the nowrap title's
+     untruncated width can't force this column wider than the viewport. */
+  min-width: 0;
+}
+
+@media (max-width: 400px) {
+  .card-grid.collection-card-grid {
+    gap: 10px;
+  }
+
+  .card-grid.collection-card-grid .card {
+    padding: 10px;
+  }
+
+  .card-grid.collection-card-grid .card h3 {
+    font-size: 0.9rem;
+  }
+
+  .card-grid.collection-card-grid .card-link {
+    font-size: 0.8rem;
+  }
+}
+
 /* ---- Blog cards ---- */
 .blog-date, .blog-meta { color: var(--color-text-muted); font-size: 0.85rem; margin: 0 0 var(--space-2); }
 

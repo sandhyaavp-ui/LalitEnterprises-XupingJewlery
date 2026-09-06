@@ -43,7 +43,7 @@
 <section class="section section-cream">
     <div class="container">
         <h2 class="section-title">Made for daily wear, priced for resale.</h2>
-        <div class="card-grid">
+        <div class="card-grid collection-card-grid">
             {% for collection in collections %}
             <a href="{% url 'catalog:collection_detail' slug=collection.slug %}" class="card" data-aos="zoom-in" data-aos-delay="{% widthratio forloop.counter0 1 50 %}">
                 {% if collection.image %}
