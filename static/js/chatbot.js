@@ -68,6 +68,11 @@
       q: 'Do you only sell Xuping products?',
       keywords: ['only xuping', 'other brands', 'xuping only', 'just xuping', 'exclusively xuping'],
       a: 'Yes — our entire collection is exclusively Xuping jewellery. We don’t stock or mix in any other brand, so you can be confident every design you see here is genuine Xuping stock.'
+    },
+    {
+      q: 'How often do you add new designs?',
+      keywords: ['new designs', 'how often', 'new styles', 'monthly', 'restock', 'fresh designs'],
+      a: 'We refresh our collection every month with new Xuping styles. Keep your store current and your customers engaged with fresh options.'
     }
   ];
 
