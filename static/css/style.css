@@ -994,6 +994,86 @@ textarea.form-control { resize: vertical; min-height: 100px; }
   margin-bottom: var(--space-3);
 }
 
+.product-detail-image-wrap {
+  position: relative;
+}
+
+.product-detail-image-wrap .product-detail-image {
+  display: block;
+}
+
+.image-zoom-btn {
+  position: absolute;
+  right: 12px;
+  bottom: calc(var(--space-3) + 12px);
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  border: 1.5px solid var(--color-gold-dim);
+  background: rgba(61, 40, 23, 0.75);
+  color: var(--color-gold);
+  font-size: 1.2rem;
+  line-height: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: color 0.15s ease, border-color 0.15s ease, background 0.15s ease;
+}
+
+.image-zoom-btn:hover,
+.image-zoom-btn:focus-visible {
+  color: var(--color-gold-bright);
+  border-color: var(--color-gold);
+  background: rgba(61, 40, 23, 0.9);
+}
+
+.image-lightbox[hidden] {
+  display: none;
+}
+
+.image-lightbox {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  background: rgba(0, 0, 0, 0.88);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-3);
+}
+
+.image-lightbox img {
+  max-width: 95vw;
+  max-height: 90vh;
+  border-radius: var(--radius-sm);
+}
+
+.image-lightbox-close {
+  position: absolute;
+  top: var(--space-3);
+  right: var(--space-3);
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  border: 1.5px solid var(--color-gold-dim);
+  background: var(--color-bg-card);
+  color: var(--color-gold);
+  font-size: 1.6rem;
+  line-height: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: color 0.15s ease, border-color 0.15s ease;
+}
+
+.image-lightbox-close:hover,
+.image-lightbox-close:focus-visible {
+  color: var(--color-gold-bright);
+  border-color: var(--color-gold);
+}
+
 .product-detail-tagline {
   color: var(--color-gold);
   font-size: 0.8rem;
