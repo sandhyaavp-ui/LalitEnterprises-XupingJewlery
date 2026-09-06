@@ -29,6 +29,9 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'django.contrib.sitemaps',
 
+    'cloudinary_storage',
+    'cloudinary',
+
     'catalog',
     'inquiries',
     'pages',
@@ -122,17 +125,21 @@ STATICFILES_DIRS = [BASE_DIR / 'static']
 STATIC_ROOT = BASE_DIR / 'staticfiles'
 
 # Django 5.1+ reads storage backends from STORAGES, not the old
-# STATICFILES_STORAGE setting (which is a no-op on this Django version —
-# it's been removed, not just deprecated). Only the 'staticfiles' entry is
-# changed here; 'default' is left as Django's own default so file uploads
-# (ImageFields etc.) are unaffected.
+# STATICFILES_STORAGE / DEFAULT_FILE_STORAGE settings (both are a no-op on
+# this Django version — the legacy shim was removed, not just deprecated).
 STORAGES = {
     'default': {
-        'BACKEND': 'django.core.files.storage.FileSystemStorage',
+        'BACKEND': 'cloudinary_storage.storage.MediaCloudinaryStorage',
     },
     'staticfiles': {
         'BACKEND': 'whitenoise.storage.CompressedManifestStaticFilesStorage',
     },
+}
+
+CLOUDINARY_STORAGE = {
+    'CLOUD_NAME': config('CLOUDINARY_CLOUD_NAME'),
+    'API_KEY': config('CLOUDINARY_API_KEY'),
+    'API_SECRET': config('CLOUDINARY_API_SECRET'),
 }
 
 # Media files (user-uploaded product/collection/blog images)
