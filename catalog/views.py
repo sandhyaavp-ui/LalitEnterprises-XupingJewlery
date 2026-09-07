@@ -1,3 +1,5 @@
+from urllib.parse import quote
+
 from django.shortcuts import render, get_object_or_404
 from .models import Collection, Product
 
@@ -37,10 +39,16 @@ def product_detail(request, slug):
         if pick:
             complete_the_pair.append(pick)
 
+    message = f"Hi, I'm interested in {product.name}."
+    if product.image:
+        message += f" Photo: {product.image.url}"
+    whatsapp_url = f"https://wa.me/919841066880?text={quote(message)}"
+
     return render(request, 'catalog/product_detail.html', {
         'product': product,
         'recommended': recommended,
         'complete_the_pair': complete_the_pair,
+        'whatsapp_url': whatsapp_url,
     })
 
 
