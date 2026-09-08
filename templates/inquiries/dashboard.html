@@ -109,7 +109,7 @@
         </tr>
         <tr class="booking-details-row">
           <td colspan="5">
-            <div class="detail-row"><span class="detail-label">Location</span>{{ b.location }}</div>
+            <div class="detail-row"><span class="detail-label">Location</span>{% if b.location %}<a href="https://www.google.com/maps/search/?api=1&query={{ b.location|urlencode }}" target="_blank" rel="noopener">{{ b.location }} — Open in Google Maps</a>{% else %}—{% endif %}</div>
             <div class="detail-row"><span class="detail-label">Notes</span>{{ b.notes|default:"—" }}</div>
             <div class="detail-row"><span class="detail-label">Type</span>{{ b.get_booking_type_display }}</div>
             <div class="detail-row"><span class="detail-label">Submitted</span>{{ b.created_at }}</div>
@@ -169,7 +169,7 @@
         </tr>
         <tr class="booking-details-row">
           <td colspan="5">
-            <div class="detail-row"><span class="detail-label">Location</span>{{ b.location }}</div>
+            <div class="detail-row"><span class="detail-label">Location</span>{% if b.location %}<a href="https://www.google.com/maps/search/?api=1&query={{ b.location|urlencode }}" target="_blank" rel="noopener">{{ b.location }} — Open in Google Maps</a>{% else %}—{% endif %}</div>
             <div class="detail-row"><span class="detail-label">Notes</span>{{ b.notes|default:"—" }}</div>
             <div class="detail-row"><span class="detail-label">Type</span>{{ b.get_booking_type_display }}</div>
             <div class="detail-row"><span class="detail-label">Submitted</span>{{ b.created_at }}</div>

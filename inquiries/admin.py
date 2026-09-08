@@ -1,4 +1,8 @@
+from urllib.parse import quote
+
 from django.contrib import admin
+from django.utils.html import format_html
+
 from .models import ContactSubmission, VideoCallBooking, Order, OrderItem
 
 
@@ -11,10 +15,17 @@ class ContactSubmissionAdmin(admin.ModelAdmin):
 
 @admin.register(VideoCallBooking)
 class VideoCallBookingAdmin(admin.ModelAdmin):
-    list_display = ('full_name', 'phone', 'location', 'booking_type', 'preferred_date', 'preferred_time', 'status', 'created_at')
+    list_display = ('full_name', 'phone', 'location_link', 'booking_type', 'preferred_date', 'preferred_time', 'status', 'created_at')
     list_filter = ('booking_type', 'status')
-    search_fields = ('full_name', 'phone')
+    search_fields = ('full_name', 'phone', 'location')
     readonly_fields = ('created_at', 'session_key')
+
+    def location_link(self, obj):
+        if not obj.location:
+            return '—'
+        url = f"https://www.google.com/maps/search/?api=1&query={quote(obj.location)}"
+        return format_html('<a href="{}" target="_blank" rel="noopener">{}</a>', url, obj.location)
+    location_link.short_description = 'Location'
 
 
 class OrderItemInline(admin.TabularInline):

@@ -78,6 +78,8 @@
 
   var state = 'menu';
   var enquiry = { name: '', phone: '', message: '' };
+  var videoCallState = { full_name: '', phone: '', location: '', date: '', time: '' };
+  var TIME_SLOTS = ['11:00 AM', '12:00 PM', '1:00 PM', '2:00 PM', '3:00 PM', '4:00 PM', '5:00 PM'];
 
   function getCookie(name) {
     var match = document.cookie.match('(^|;)\\s*' + name + '\\s*=\\s*([^;]+)');
@@ -128,6 +130,7 @@
     addQuickReplies([
       { label: 'Browse collections', onClick: showCollections },
       { label: 'Ask a question', onClick: showFaqMenu },
+      { label: 'Book a video call', onClick: startVideoCallBooking },
       { label: 'Leave an enquiry', onClick: startEnquiry },
       { label: 'Chat on WhatsApp', onClick: function () { window.open(WHATSAPP_URL, '_blank'); } }
     ]);
@@ -194,6 +197,38 @@
     state = 'menu';
   }
 
+  function startVideoCallBooking() {
+    state = 'vc-name';
+    videoCallState = { full_name: '', phone: '', location: '', date: '', time: '' };
+    addMessage('Sure — let’s get your video call booked. What’s your full name?', 'bot');
+  }
+
+  function submitVideoCallBooking() {
+    addMessage('Booking your call…', 'bot');
+    fetch('/video-call/book/', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'X-CSRFToken': getCookie('csrftoken')
+      },
+      body: JSON.stringify(videoCallState)
+    })
+      .then(function (res) { return res.ok ? res.json() : Promise.reject(); })
+      .then(function () {
+        addMessage('You’re booked in, ' + videoCallState.full_name + '! We’ll confirm by phone. You can also see this under "Your calls" on the Book a Video Call page.', 'bot');
+        showMenu();
+      })
+      .catch(function () {
+        addMessage('Something went wrong booking that. Want to try the full booking page instead, or WhatsApp us directly?', 'bot');
+        addQuickReplies([
+          { label: 'Go to booking page', onClick: function () { window.location.href = '/video-call/'; } },
+          { label: 'WhatsApp us', onClick: function () { window.open(WHATSAPP_URL, '_blank'); } },
+          { label: 'Main menu', onClick: showMenu }
+        ]);
+      });
+    state = 'menu';
+  }
+
   function matchFaq(text) {
     var lower = text.toLowerCase();
     for (var i = 0; i < FAQS.length; i++) {
@@ -230,6 +265,74 @@
     if (state === 'enquiry-message') {
       enquiry.message = text;
       submitEnquiry();
+      return;
+    }
+
+    if (state === 'vc-name') {
+      videoCallState.full_name = text;
+      state = 'vc-phone';
+      addMessage('Thanks! What’s the best phone number to reach you on? (10 digits)', 'bot');
+      return;
+    }
+    if (state === 'vc-phone') {
+      var digitsOnly = text.replace(/\D/g, '');
+      if (digitsOnly.length !== 10) {
+        addMessage('That doesn’t look like a 10-digit number — could you re-enter it?', 'bot');
+        return;
+      }
+      videoCallState.phone = digitsOnly;
+      state = 'vc-location';
+      addMessage('Got it. What city/state are you in? (e.g. Chennai - Tamil Nadu)', 'bot');
+      return;
+    }
+    if (state === 'vc-location') {
+      videoCallState.location = text;
+      state = 'vc-date';
+      addMessage('What date works for you? (please type as DD-MM-YYYY, must be a future date)', 'bot');
+      return;
+    }
+    if (state === 'vc-date') {
+      // Expects DD-MM-YYYY, converts to YYYY-MM-DD for the backend.
+      // Checks each part is actually numeric (not just "3 things split by
+      // hyphens" — "not-a-date" also splits into 3 parts) and forms a real
+      // calendar date (catches things like 31-02-2026) before checking it's
+      // in the future.
+      var parts = text.split('-');
+      var dayStr = parts[0], monthStr = parts[1], yearStr = parts[2];
+      var numericFormat = parts.length === 3
+        && /^\d{1,2}$/.test(dayStr)
+        && /^\d{1,2}$/.test(monthStr)
+        && /^\d{4}$/.test(yearStr);
+      if (!numericFormat) {
+        addMessage('Please enter the date as DD-MM-YYYY, e.g. 25-12-2026.', 'bot');
+        return;
+      }
+      var day = parseInt(dayStr, 10);
+      var month = parseInt(monthStr, 10);
+      var year = parseInt(yearStr, 10);
+      var dateObj = new Date(year, month - 1, day);
+      var isRealCalendarDate = dateObj.getFullYear() === year && dateObj.getMonth() === month - 1 && dateObj.getDate() === day;
+      if (!isRealCalendarDate) {
+        addMessage('That doesn’t look like a real date — please enter DD-MM-YYYY, e.g. 25-12-2026.', 'bot');
+        return;
+      }
+      var isoDate = yearStr + '-' + monthStr.padStart(2, '0') + '-' + dayStr.padStart(2, '0');
+      var today = new Date().toISOString().split('T')[0];
+      if (isoDate <= today) {
+        addMessage('Please choose a future date.', 'bot');
+        return;
+      }
+      videoCallState.date = isoDate;
+      state = 'vc-time';
+      addMessage('And what time works best?', 'bot');
+      addQuickReplies(TIME_SLOTS.map(function (slot) {
+        return { label: slot, onClick: function () {
+          addMessage(slot, 'user');
+          videoCallState.time = slot;
+          addMessage('Great — confirming your booking now.', 'bot');
+          submitVideoCallBooking();
+        }};
+      }));
       return;
     }
 
