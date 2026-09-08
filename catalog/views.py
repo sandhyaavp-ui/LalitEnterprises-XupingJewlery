@@ -29,7 +29,7 @@ def product_detail(request, slug):
 
     recommended = (
         Product.objects.filter(collection=product.collection)
-        .exclude(pk=product.pk)[:3]
+        .exclude(pk=product.pk)[:4]
     )
 
     other_collections = Collection.objects.exclude(pk=product.collection_id)
