@@ -173,3 +173,11 @@ EMAIL_USE_TLS = True
 EMAIL_HOST_USER = config('EMAIL_HOST_USER', default='')
 EMAIL_HOST_PASSWORD = config('EMAIL_HOST_PASSWORD', default='')
 NOTIFY_EMAIL = config('NOTIFY_EMAIL', default=EMAIL_HOST_USER)
+
+# Without this, a blocked/slow outbound SMTP connection hangs indefinitely,
+# and gunicorn's own worker timeout eventually SIGABRTs the entire worker
+# process — which happens *before* fail_silently=True ever gets a chance to
+# catch anything, since that only wraps normal Python exceptions, not the
+# worker being killed out from under the request. This makes the SMTP
+# connection attempt fail fast with a normal (catchable) timeout instead.
+EMAIL_TIMEOUT = 10
