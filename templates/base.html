@@ -16,14 +16,16 @@
 <title>{% block title %}Lalit Enterprises — Authorised Wholesale Agent, Chennai{% endblock %}</title>
 <link rel="icon" type="image/png" href="{% static 'images/favicon.png' %}">
 <meta name="description" content="{% block meta_description %}Authentic Xuping jewellery at genuine wholesale prices. Everyday-wear imitation jewellery for resellers and retailers across India.{% endblock %}">
-{% with og_title="Lalit Enterprises — Authentic Xuping Jewellery Wholesale" og_description="Authentic Xuping wholesale jewellery for resellers across India. Browse designs, check MOQ, and book a free video call." og_image=request.scheme|add:"://"|add:request.get_host|add:"/static/images/favicon.png" %}
+{% with og_title="Lalit Enterprises — Authentic Xuping Jewellery Wholesale" og_description="Authentic Xuping wholesale jewellery for resellers across India. Browse designs, check MOQ, and book a free video call." og_image=request.scheme|add:"://"|add:request.get_host|add:"/static/images/og-banner.jpg" %}
 <meta property="og:type" content="website">
 <meta property="og:url" content="{{ request.build_absolute_uri }}">
 <meta property="og:site_name" content="Lalit Enterprises">
 <meta property="og:title" content="{{ og_title }}">
 <meta property="og:description" content="{{ og_description }}">
 <meta property="og:image" content="{{ og_image }}">
-<meta name="twitter:card" content="summary">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="{{ og_title }}">
 <meta name="twitter:description" content="{{ og_description }}">
 <meta name="twitter:image" content="{{ og_image }}">
