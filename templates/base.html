@@ -17,7 +17,7 @@
 <body>
 
 <header class="site-header">
-    <a href="{% url 'pages:home' %}" class="logo">Lalit <span class="accent">Enterprises</span></a>
+    <a href="{% url 'pages:home' %}" class="logo"><img src="{% static 'images/favicon.png' %}" alt="" class="logo-mark">Lalit <span class="accent">Enterprises</span></a>
     <button id="nav-toggle" class="nav-toggle" aria-label="Toggle menu" aria-expanded="false">
         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12h18M3 6h18M3 18h18"/></svg>
     </button>
@@ -51,7 +51,7 @@
 <footer class="site-footer">
     <div class="container footer-grid">
         <div class="footer-col">
-            <h3>Lalit Enterprises</h3>
+            <h3 class="footer-logo"><img src="{% static 'images/favicon.png' %}" alt="" class="logo-mark">Lalit Enterprises</h3>
             <p>Authorised Xuping wholesale agent in Chennai — everyday-wear imitation jewellery for resellers and retailers across India.</p>
             <p class="footer-moq">Our Minimum order quantity is 6pcs of each design. Minimum amount of ₹20,000.</p>
         </div>
