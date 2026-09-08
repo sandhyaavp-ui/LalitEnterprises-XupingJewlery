@@ -657,6 +657,26 @@ textarea.form-control { resize: vertical; min-height: 100px; }
   }
 }
 
+/* Desktop-only: widen from the phone/tablet default of 2 columns. Everything
+   below 768px (including the 400px compacting tier above) is untouched. */
+@media (min-width: 768px) and (max-width: 1024px) {
+  .card-grid.product-card-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 1025px) {
+  .card-grid.product-card-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (min-width: 1440px) {
+  .card-grid.product-card-grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
 /* Collection cards (Home + Products page tiles) — same 2-column-at-every-width
    treatment as .product-card-grid. No MOQ/disclaimer here, just image, name,
    and the "View designs" .card-link, so there's one less thing to compact. */
