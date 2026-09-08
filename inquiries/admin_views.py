@@ -16,6 +16,14 @@ def dashboard(request):
         'video_calls': video_calls,
         'appointments': appointments,
         'enquiries': enquiries,
+        'video_calls_pending': video_calls.filter(status='pending').count(),
+        'video_calls_confirmed': video_calls.filter(status='confirmed').count(),
+        'video_calls_completed': video_calls.filter(status='completed').count(),
+        'video_calls_cancelled': video_calls.filter(status='cancelled').count(),
+        'appointments_pending': appointments.filter(status='pending').count(),
+        'appointments_confirmed': appointments.filter(status='confirmed').count(),
+        'appointments_completed': appointments.filter(status='completed').count(),
+        'appointments_cancelled': appointments.filter(status='cancelled').count(),
     })
 
 

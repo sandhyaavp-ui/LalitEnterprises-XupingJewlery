@@ -13,23 +13,42 @@
     .dash-tabs { display:flex; gap: var(--space-2); }
     .dash-tab-btn { background:var(--color-bg-card); border:1px solid var(--color-border); color:var(--color-text); border-radius: var(--radius-pill); padding:8px 18px; cursor:pointer; }
     .dash-tab-btn.is-active { border-color: var(--color-gold); color: var(--color-gold); }
-    .status-filters { display:flex; gap:8px; }
-    .status-filter-btn { background:none; border:1px solid var(--color-border); color:var(--color-text-muted); border-radius:var(--radius-pill); padding:6px 14px; cursor:pointer; font-size:0.85rem; }
-    .status-filter-btn.is-active { border-color: var(--color-gold); color: var(--color-gold); }
-    .booking-row { background:var(--color-bg-card); border:1px solid var(--color-border); border-radius:var(--radius-md); padding: var(--space-2); margin-bottom: var(--space-2); }
-    .booking-summary { display:flex; justify-content:space-between; align-items:center; cursor:pointer; }
-    .booking-details { display:none; margin-top: var(--space-2); padding-top: var(--space-2); border-top:1px solid var(--color-border); }
-    .booking-details.is-open { display:block; }
-    .detail-row { display:flex; gap: var(--space-2); padding: 4px 0; font-size:0.9rem; }
-    .detail-label { color:var(--color-gold); text-transform:uppercase; font-size:0.75rem; width:140px; flex-shrink:0; }
-    .status-pill { padding:4px 12px; border-radius:var(--radius-pill); font-size:0.8rem; font-weight:600; }
-    .status-pill.pending { background:rgba(212,175,55,0.15); color:var(--color-gold); }
-    .status-pill.confirmed { background:rgba(100,150,200,0.15); color:#88b4d8; }
-    .status-pill.completed { background:rgba(100,180,120,0.15); color:#7fc98f; }
-    .status-pill.cancelled { background:rgba(200,90,90,0.15); color:#d88888; }
-    .status-btn-row { display:flex; gap:8px; margin-top: var(--space-2); }
+
+    /* Quick stats bar */
+    .dash-stats-bar { display:flex; flex-wrap:wrap; gap: var(--space-2); margin-bottom: var(--space-3); }
+    .dash-stat { background:var(--color-bg-card); border:1px solid var(--color-border); border-radius:var(--radius-pill); padding:6px 16px; font-size:0.85rem; color:var(--color-text-muted); }
+    .dash-stat strong { color:var(--color-text); margin-right:4px; }
+
+    .status-pill { padding:4px 12px; border-radius:var(--radius-pill); font-size:0.8rem; font-weight:600; white-space:nowrap; }
+    .status-pill.pending { background: rgba(255, 165, 0, 0.15); color: #ffa500; }
+    .status-pill.confirmed { background: rgba(76, 175, 80, 0.15); color: #4caf50; }
+    .status-pill.completed { background: rgba(100, 150, 220, 0.15); color: #6496dc; }
+    .status-pill.cancelled { background: rgba(220, 90, 90, 0.15); color: #dc5a5a; }
+
+    .status-btn-row { display:flex; gap:8px; margin-top: var(--space-2); flex-wrap:wrap; }
     .status-btn { background:none; border:1px solid var(--color-border); color:var(--color-text); padding:6px 14px; border-radius:var(--radius-pill); cursor:pointer; font-size:0.85rem; }
     .status-btn.is-current { border-color: var(--color-gold); color: var(--color-gold); font-weight:700; }
+
+    .detail-row { display:flex; gap: var(--space-2); padding: 4px 0; font-size:0.9rem; }
+    .detail-label { color:var(--color-gold); text-transform:uppercase; font-size:0.75rem; width:140px; flex-shrink:0; }
+
+    /* Sortable table (Video calls / Appointments) */
+    .dash-table { width:100%; border-collapse:collapse; margin-bottom: var(--space-3); }
+    .dash-table th {
+      text-align:left; padding:10px 12px; border-bottom:2px solid var(--color-border);
+      color: var(--color-text-muted); font-size:0.8rem; text-transform:uppercase; letter-spacing:0.03em;
+      cursor:pointer; user-select:none; position:relative;
+    }
+    .dash-table th::after { content:''; margin-left:6px; opacity:0.4; }
+    .dash-table th.sort-asc::after { content:'\25B2'; opacity:1; color:var(--color-gold); }
+    .dash-table th.sort-desc::after { content:'\25BC'; opacity:1; color:var(--color-gold); }
+    .dash-table tbody.booking-group > tr.booking-row-main { border-bottom:1px solid var(--color-border); }
+    .dash-table tbody.booking-group > tr.booking-row-main > td { padding:12px; }
+    .dash-table tbody.booking-group > tr.booking-row-main:hover { background: var(--color-bg-alt); cursor: pointer; }
+    .dash-table tbody.booking-group > tr.booking-details-row { display:none; background: var(--color-bg-card); }
+    .dash-table tbody.booking-group.is-open > tr.booking-details-row { display:table-row; }
+    .dash-table tbody.booking-group > tr.booking-details-row > td { padding: var(--space-2) var(--space-3); }
+    .dash-table tbody.booking-group.is-hidden-by-filter { display:none; }
   </style>
 </head>
 <body>
@@ -52,86 +71,129 @@
   <!-- Video calls tab -->
   <div class="dash-panel" id="panel-video_calls">
     <h2>Video Call Bookings ({{ video_calls|length }})</h2>
-    <div class="status-filters" style="margin-bottom: var(--space-3);">
-      <button class="status-filter-btn is-active" data-status="all">All</button>
-      <button class="status-filter-btn" data-status="pending">Pending</button>
-      <button class="status-filter-btn" data-status="confirmed">Confirmed</button>
-      <button class="status-filter-btn" data-status="completed">Completed</button>
-      <button class="status-filter-btn" data-status="cancelled">Cancelled</button>
+
+    <div class="dash-stats-bar">
+      <span class="dash-stat"><strong>{{ video_calls_pending }}</strong>Pending</span>
+      <span class="dash-stat"><strong>{{ video_calls_confirmed }}</strong>Confirmed</span>
+      <span class="dash-stat"><strong>{{ video_calls_completed }}</strong>Completed</span>
+      <span class="dash-stat"><strong>{{ video_calls_cancelled }}</strong>Cancelled</span>
     </div>
-    {% for b in video_calls %}
-    <div class="booking-row" data-status="{{ b.status }}">
-      <div class="booking-summary">
-        <div>
-          <strong>{{ b.full_name }}</strong><br>
-          <span style="color:var(--color-text-muted); font-size:0.9rem;">{{ b.phone }} · {{ b.preferred_date }} at {{ b.preferred_time }}</span>
-        </div>
-        <span class="status-pill {{ b.status }}">{{ b.get_status_display }}</span>
-      </div>
-      <div class="booking-details">
-        <div class="detail-row"><span class="detail-label">Name</span>{{ b.full_name }}</div>
-        <div class="detail-row"><span class="detail-label">Phone</span>{{ b.phone }}</div>
-        <div class="detail-row"><span class="detail-label">Location</span>{{ b.location }}</div>
-        <div class="detail-row"><span class="detail-label">Preferred Date</span>{{ b.preferred_date }}</div>
-        <div class="detail-row"><span class="detail-label">Preferred Time</span>{{ b.preferred_time }}</div>
-        <div class="detail-row"><span class="detail-label">Notes</span>{{ b.notes|default:"—" }}</div>
-        <div class="detail-row"><span class="detail-label">Type</span>{{ b.get_booking_type_display }}</div>
-        <div class="detail-row"><span class="detail-label">Submitted</span>{{ b.created_at }}</div>
-        <div class="status-btn-row">
-          {% for value, label in b.STATUS_CHOICES %}
-          <button class="status-btn {% if b.status == value %}is-current{% endif %}" data-booking-id="{{ b.id }}" data-status="{{ value }}">{{ label }}</button>
-          {% endfor %}
-        </div>
-      </div>
+
+    <div class="filter-pills dash-filters" style="justify-content:flex-start;">
+      <button class="filter-pill is-active" data-status="all">All</button>
+      <button class="filter-pill" data-status="pending">Pending</button>
+      <button class="filter-pill" data-status="confirmed">Confirmed</button>
+      <button class="filter-pill" data-status="completed">Completed</button>
+      <button class="filter-pill" data-status="cancelled">Cancelled</button>
     </div>
-    {% empty %}
+
+    {% if video_calls %}
+    <table class="dash-table">
+      <thead>
+        <tr>
+          <th data-sort="name">Name</th>
+          <th data-sort="phone">Phone</th>
+          <th data-sort="date">Date</th>
+          <th data-sort="time">Time</th>
+          <th data-sort="status">Status</th>
+        </tr>
+      </thead>
+      {% for b in video_calls %}
+      <tbody class="booking-group" data-status="{{ b.status }}">
+        <tr class="booking-row-main">
+          <td>{{ b.full_name }}</td>
+          <td>{{ b.phone }}</td>
+          <td>{{ b.preferred_date }}</td>
+          <td>{{ b.preferred_time }}</td>
+          <td><span class="status-pill {{ b.status }}">{{ b.get_status_display }}</span></td>
+        </tr>
+        <tr class="booking-details-row">
+          <td colspan="5">
+            <div class="detail-row"><span class="detail-label">Location</span>{{ b.location }}</div>
+            <div class="detail-row"><span class="detail-label">Notes</span>{{ b.notes|default:"—" }}</div>
+            <div class="detail-row"><span class="detail-label">Type</span>{{ b.get_booking_type_display }}</div>
+            <div class="detail-row"><span class="detail-label">Submitted</span>{{ b.created_at }}</div>
+            <div class="status-btn-row">
+              {% for value, label in b.STATUS_CHOICES %}
+              <button class="status-btn {% if b.status == value %}is-current{% endif %}" data-booking-id="{{ b.id }}" data-status="{{ value }}">{{ label }}</button>
+              {% endfor %}
+            </div>
+          </td>
+        </tr>
+      </tbody>
+      {% endfor %}
+    </table>
+    {% else %}
     <p style="color:var(--color-text-muted);">No video call bookings yet.</p>
-    {% endfor %}
+    {% endif %}
   </div>
 
   <!-- Appointments tab -->
   <div class="dash-panel" id="panel-appointments" style="display:none;">
     <h2>Appointments ({{ appointments|length }})</h2>
-    <div class="status-filters" style="margin-bottom: var(--space-3);">
-      <button class="status-filter-btn is-active" data-status="all">All</button>
-      <button class="status-filter-btn" data-status="pending">Pending</button>
-      <button class="status-filter-btn" data-status="confirmed">Confirmed</button>
-      <button class="status-filter-btn" data-status="completed">Completed</button>
-      <button class="status-filter-btn" data-status="cancelled">Cancelled</button>
+
+    <div class="dash-stats-bar">
+      <span class="dash-stat"><strong>{{ appointments_pending }}</strong>Pending</span>
+      <span class="dash-stat"><strong>{{ appointments_confirmed }}</strong>Confirmed</span>
+      <span class="dash-stat"><strong>{{ appointments_completed }}</strong>Completed</span>
+      <span class="dash-stat"><strong>{{ appointments_cancelled }}</strong>Cancelled</span>
     </div>
-    {% for b in appointments %}
-    <div class="booking-row" data-status="{{ b.status }}">
-      <div class="booking-summary">
-        <div>
-          <strong>{{ b.full_name }}</strong><br>
-          <span style="color:var(--color-text-muted); font-size:0.9rem;">{{ b.phone }} · {{ b.preferred_date }} at {{ b.preferred_time }}</span>
-        </div>
-        <span class="status-pill {{ b.status }}">{{ b.get_status_display }}</span>
-      </div>
-      <div class="booking-details">
-        <div class="detail-row"><span class="detail-label">Name</span>{{ b.full_name }}</div>
-        <div class="detail-row"><span class="detail-label">Phone</span>{{ b.phone }}</div>
-        <div class="detail-row"><span class="detail-label">Location</span>{{ b.location }}</div>
-        <div class="detail-row"><span class="detail-label">Preferred Date</span>{{ b.preferred_date }}</div>
-        <div class="detail-row"><span class="detail-label">Preferred Time</span>{{ b.preferred_time }}</div>
-        <div class="detail-row"><span class="detail-label">Notes</span>{{ b.notes|default:"—" }}</div>
-        <div class="detail-row"><span class="detail-label">Type</span>{{ b.get_booking_type_display }}</div>
-        <div class="detail-row"><span class="detail-label">Submitted</span>{{ b.created_at }}</div>
-        <div class="status-btn-row">
-          {% for value, label in b.STATUS_CHOICES %}
-          <button class="status-btn {% if b.status == value %}is-current{% endif %}" data-booking-id="{{ b.id }}" data-status="{{ value }}">{{ label }}</button>
-          {% endfor %}
-        </div>
-      </div>
+
+    <div class="filter-pills dash-filters" style="justify-content:flex-start;">
+      <button class="filter-pill is-active" data-status="all">All</button>
+      <button class="filter-pill" data-status="pending">Pending</button>
+      <button class="filter-pill" data-status="confirmed">Confirmed</button>
+      <button class="filter-pill" data-status="completed">Completed</button>
+      <button class="filter-pill" data-status="cancelled">Cancelled</button>
     </div>
-    {% empty %}
+
+    {% if appointments %}
+    <table class="dash-table">
+      <thead>
+        <tr>
+          <th data-sort="name">Name</th>
+          <th data-sort="phone">Phone</th>
+          <th data-sort="date">Date</th>
+          <th data-sort="time">Time</th>
+          <th data-sort="status">Status</th>
+        </tr>
+      </thead>
+      {% for b in appointments %}
+      <tbody class="booking-group" data-status="{{ b.status }}">
+        <tr class="booking-row-main">
+          <td>{{ b.full_name }}</td>
+          <td>{{ b.phone }}</td>
+          <td>{{ b.preferred_date }}</td>
+          <td>{{ b.preferred_time }}</td>
+          <td><span class="status-pill {{ b.status }}">{{ b.get_status_display }}</span></td>
+        </tr>
+        <tr class="booking-details-row">
+          <td colspan="5">
+            <div class="detail-row"><span class="detail-label">Location</span>{{ b.location }}</div>
+            <div class="detail-row"><span class="detail-label">Notes</span>{{ b.notes|default:"—" }}</div>
+            <div class="detail-row"><span class="detail-label">Type</span>{{ b.get_booking_type_display }}</div>
+            <div class="detail-row"><span class="detail-label">Submitted</span>{{ b.created_at }}</div>
+            <div class="status-btn-row">
+              {% for value, label in b.STATUS_CHOICES %}
+              <button class="status-btn {% if b.status == value %}is-current{% endif %}" data-booking-id="{{ b.id }}" data-status="{{ value }}">{{ label }}</button>
+              {% endfor %}
+            </div>
+          </td>
+        </tr>
+      </tbody>
+      {% endfor %}
+    </table>
+    {% else %}
     <p style="color:var(--color-text-muted);">No appointment requests yet.</p>
-    {% endfor %}
+    {% endif %}
   </div>
 
   <!-- Enquiries tab (read-only, no status) -->
   <div class="dash-panel" id="panel-enquiries" style="display:none;">
     <h2>Enquiries ({{ enquiries|length }})</h2>
+    <div class="dash-stats-bar">
+      <span class="dash-stat"><strong>{{ enquiries|length }}</strong>Total</span>
+    </div>
     {% for e in enquiries %}
     <div class="booking-row">
       <strong>{{ e.name }}</strong><br>
@@ -154,23 +216,46 @@
       });
     });
 
-    // Expand/collapse booking details
-    document.querySelectorAll('.booking-summary').forEach(function (summary) {
-      summary.addEventListener('click', function () {
-        summary.nextElementSibling.classList.toggle('is-open');
+    // Expand/collapse booking details (click the summary row)
+    document.querySelectorAll('tr.booking-row-main').forEach(function (row) {
+      row.addEventListener('click', function () {
+        row.closest('tbody.booking-group').classList.toggle('is-open');
       });
     });
 
     // Status filter pills (works for whichever panel is currently visible)
-    document.querySelectorAll('.status-filter-btn').forEach(function (btn) {
+    document.querySelectorAll('.dash-filters .filter-pill').forEach(function (btn) {
       btn.addEventListener('click', function () {
         var group = btn.parentElement;
-        group.querySelectorAll('.status-filter-btn').forEach(function (b) { b.classList.remove('is-active'); });
+        group.querySelectorAll('.filter-pill').forEach(function (b) { b.classList.remove('is-active'); });
         btn.classList.add('is-active');
         var filter = btn.dataset.status;
         var panel = btn.closest('.dash-panel');
-        panel.querySelectorAll('.booking-row').forEach(function (row) {
-          row.style.display = (filter === 'all' || row.dataset.status === filter) ? 'block' : 'none';
+        panel.querySelectorAll('tbody.booking-group').forEach(function (tbody) {
+          var show = (filter === 'all' || tbody.dataset.status === filter);
+          tbody.classList.toggle('is-hidden-by-filter', !show);
+        });
+      });
+    });
+
+    // Sortable table columns — groups keep their summary + detail row paired,
+    // since each booking is its own <tbody>, not a single <tr>.
+    document.querySelectorAll('.dash-table').forEach(function (table) {
+      var sortableHeaders = Array.from(table.querySelectorAll('th[data-sort]'));
+      sortableHeaders.forEach(function (th, index) {
+        th.addEventListener('click', function () {
+          var groups = Array.from(table.querySelectorAll('tbody.booking-group'));
+          var ascending = !th.classList.contains('sort-asc');
+
+          groups.sort(function (a, b) {
+            var aText = a.querySelector('.booking-row-main').children[index].textContent.trim();
+            var bText = b.querySelector('.booking-row-main').children[index].textContent.trim();
+            return ascending ? aText.localeCompare(bText) : bText.localeCompare(aText);
+          });
+
+          sortableHeaders.forEach(function (h) { h.classList.remove('sort-asc', 'sort-desc'); });
+          th.classList.add(ascending ? 'sort-asc' : 'sort-desc');
+          groups.forEach(function (g) { table.appendChild(g); });
         });
       });
     });
@@ -181,7 +266,8 @@
       return match ? match.pop() : '';
     }
     document.querySelectorAll('.status-btn').forEach(function (btn) {
-      btn.addEventListener('click', function () {
+      btn.addEventListener('click', function (e) {
+        e.stopPropagation();
         var id = btn.dataset.bookingId;
         var status = btn.dataset.status;
         fetch('/admin/dashboard/booking/' + id + '/status/', {
