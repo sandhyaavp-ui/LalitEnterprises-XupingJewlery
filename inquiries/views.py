@@ -1,7 +1,9 @@
 import json
 from datetime import date
 
+from django.conf import settings
 from django.contrib import messages
+from django.core.mail import send_mail
 from django.http import JsonResponse
 from django.shortcuts import render, redirect
 from django.views.decorators.csrf import csrf_protect
@@ -23,6 +25,21 @@ def contact(request):
         appointment_form = AppointmentForm()
         if enquiry_form.is_valid():
             enquiry_form.save()
+            cd = enquiry_form.cleaned_data
+            send_mail(
+                subject=f"New Enquiry from {cd['name']}",
+                message=(
+                    f"New enquiry received:\n\n"
+                    f"Name: {cd['name']}\n"
+                    f"Email: {cd.get('email') or '(not provided)'}\n"
+                    f"Phone: {cd['phone']}\n"
+                    f"Product interest: {cd.get('product_interest') or '(not provided)'}\n"
+                    f"Message: {cd.get('message') or '(not provided)'}"
+                ),
+                from_email=settings.EMAIL_HOST_USER,
+                recipient_list=[settings.NOTIFY_EMAIL],
+                fail_silently=True,
+            )
             messages.success(request, "Thanks for your enquiry — we reply the same working day.")
             return redirect('inquiries:contact')
     elif request.method == 'POST' and 'submit_appointment' in request.POST:
@@ -33,6 +50,19 @@ def contact(request):
             booking.session_key = _get_or_create_session_key(request)
             booking.booking_type = 'appointment'
             booking.save()
+            send_mail(
+                subject=f"New Appointment Request from {booking.full_name}",
+                message=(
+                    f"New appointment request:\n\n"
+                    f"Name: {booking.full_name}\n"
+                    f"Phone: {booking.phone}\n"
+                    f"Preferred Date: {booking.preferred_date}\n"
+                    f"Preferred Time: {booking.preferred_time}"
+                ),
+                from_email=settings.EMAIL_HOST_USER,
+                recipient_list=[settings.NOTIFY_EMAIL],
+                fail_silently=True,
+            )
             messages.success(request, "Your appointment request has been received — we'll confirm by phone.")
             return redirect('inquiries:contact')
     else:
@@ -93,7 +123,7 @@ def chatbot_enquiry(request):
 def book_video_call(request):
     data = json.loads(request.body)
     session_key = _get_or_create_session_key(request)
-    VideoCallBooking.objects.create(
+    booking = VideoCallBooking.objects.create(
         full_name=data.get('full_name', '').strip(),
         location=data.get('location', '').strip(),
         phone=data.get('phone', '').strip(),
@@ -101,6 +131,20 @@ def book_video_call(request):
         preferred_time=data.get('time', ''),
         session_key=session_key,
         booking_type='video_call',
+    )
+    send_mail(
+        subject=f"New Video Call Booking from {booking.full_name}",
+        message=(
+            f"New video call booking:\n\n"
+            f"Name: {booking.full_name}\n"
+            f"Phone: {booking.phone}\n"
+            f"Location: {booking.location}\n"
+            f"Preferred Date: {booking.preferred_date}\n"
+            f"Preferred Time: {booking.preferred_time}"
+        ),
+        from_email=settings.EMAIL_HOST_USER,
+        recipient_list=[settings.NOTIFY_EMAIL],
+        fail_silently=True,
     )
     return JsonResponse({'status': 'ok'})
 

@@ -161,3 +161,15 @@ MEDIA_URL = 'media/'
 MEDIA_ROOT = BASE_DIR / 'media'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+# Email notifications on form submission. EMAIL_HOST_USER/PASSWORD default to
+# '' so the site doesn't crash before these are configured — every send_mail()
+# call uses fail_silently=True, so a missing/wrong credential just skips the
+# notification instead of breaking the form submission.
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+EMAIL_HOST_USER = config('EMAIL_HOST_USER', default='')
+EMAIL_HOST_PASSWORD = config('EMAIL_HOST_PASSWORD', default='')
+NOTIFY_EMAIL = config('NOTIFY_EMAIL', default=EMAIL_HOST_USER)
