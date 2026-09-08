@@ -1,17 +1,18 @@
 from django.db import models
-from catalog.models import Product
+from catalog.models import Collection, Product
+
+
+def product_interest_choices():
+    """Collection names, evaluated at use time (not import time) so a
+    renamed or newly added collection shows up here automatically."""
+    return [(c.name, c.name) for c in Collection.objects.all()]
 
 
 class ContactSubmission(models.Model):
-    PRODUCT_INTEREST_CHOICES = [
-        ('wholesale', 'Wholesale Jewellery'),
-        ('retail', 'Retail Jewellery'),
-    ]
-
     name = models.CharField(max_length=100)
     phone = models.CharField(max_length=20)
     email = models.EmailField(blank=True)
-    product_interest = models.CharField(max_length=20, choices=PRODUCT_INTEREST_CHOICES, default='wholesale')
+    product_interest = models.CharField(max_length=30, choices=product_interest_choices, blank=True)
     message = models.TextField()
     submitted_at = models.DateTimeField(auto_now_add=True)
 
