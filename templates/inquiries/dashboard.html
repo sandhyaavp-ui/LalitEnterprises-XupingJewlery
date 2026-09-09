@@ -59,6 +59,7 @@
       <button class="dash-tab-btn is-active" data-tab="video_calls">Video calls ({{ video_calls|length }})</button>
       <button class="dash-tab-btn" data-tab="appointments">Appointments ({{ appointments|length }})</button>
       <button class="dash-tab-btn" data-tab="enquiries">Enquiries ({{ enquiries|length }})</button>
+      <button class="dash-tab-btn" data-tab="reviews">Reviews ({{ reviews|length }})</button>
     </div>
     <form method="post" action="{% url 'admin:logout' %}">
       {% csrf_token %}
@@ -202,6 +203,26 @@
     </div>
     {% empty %}
     <p style="color:var(--color-text-muted);">No enquiries yet.</p>
+    {% endfor %}
+  </div>
+
+  <!-- Reviews tab (read-only list; approve/reject happens in Django admin) -->
+  <div class="dash-panel" id="panel-reviews" style="display:none;">
+    <h2>Reviews ({{ reviews|length }})</h2>
+    <div class="dash-stats-bar">
+      <span class="dash-stat"><strong>{{ reviews_pending }}</strong>Pending</span>
+      <span class="dash-stat"><strong>{{ reviews_approved }}</strong>Approved</span>
+    </div>
+    <a href="{% url 'admin:pages_testimonial_changelist' %}" class="btn btn-outline" style="margin-bottom: var(--space-3); display:inline-block;">Approve reviews in Admin</a>
+    {% for r in reviews %}
+    <div class="booking-row">
+      <strong>{{ r.name }}</strong> · {{ r.rating }}★
+      <span class="status-pill status-{% if r.approved %}confirmed{% else %}pending{% endif %}">{% if r.approved %}Approved{% else %}Pending{% endif %}</span><br>
+      <span style="color:var(--color-text-muted); font-size:0.9rem;">{{ r.submitted_at }}</span>
+      <p style="margin-top:8px;">{{ r.message }}</p>
+    </div>
+    {% empty %}
+    <p style="color:var(--color-text-muted);">No reviews yet.</p>
     {% endfor %}
   </div>
 

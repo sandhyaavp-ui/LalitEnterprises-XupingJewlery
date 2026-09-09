@@ -143,6 +143,18 @@
             <blockquote class="instagram-media" data-instgrm-permalink="https://www.instagram.com/reel/DceIY80vK_D/" data-instgrm-version="14" style="background:#FFF; border:0; border-radius:3px; box-shadow:0 0 1px 0 rgba(0,0,0,0.5),0 1px 10px 0 rgba(0,0,0,0.15); margin:1px; max-width:540px; min-width:326px; padding:0; width:calc(100% - 2px);"></blockquote>
         </div>
         <p class="text-center">More real customer stories on <a href="https://www.instagram.com/xupingjewelery_india" target="_blank" rel="noopener">@xupingjewelery_india</a>.</p>
+        {% if testimonials %}
+        <div class="card-grid">
+            {% for t in testimonials %}
+            <div class="card" data-aos="zoom-in" data-aos-delay="{% widthratio forloop.counter0 1 50 %}">
+                <div class="stars">{% for i in "12345" %}{% if forloop.counter <= t.rating %}★{% else %}☆{% endif %}{% endfor %}</div>
+                <p>&ldquo;{{ t.message }}&rdquo;</p>
+                <p class="text-center">— {{ t.name }}</p>
+            </div>
+            {% endfor %}
+        </div>
+        {% endif %}
+        <p class="text-center"><a href="{% url 'pages:submit_review' %}">Leave a review</a> if you've bought from us before.</p>
     </div>
 </section>
 

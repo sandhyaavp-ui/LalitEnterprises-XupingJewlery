@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+{% block title %}Share Your Experience — Lalit Enterprises{% endblock %}
+{% block meta_description %}Leave a review for Lalit Enterprises, sharing your experience as a Xuping jewellery wholesale reseller.{% endblock %}
+{% block content %}
+<section class="section">
+    <div class="form-wrapper">
+        <h1 class="section-title">Share Your Experience</h1>
+        <p class="text-center">Tell other resellers what it's like to work with us.</p>
+        <form method="post">
+            {% csrf_token %}
+            {% for field in form %}
+            <div class="form-group">
+                <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+                {{ field }}
+                {% if field.errors %}<p class="form-error">{{ field.errors|striptags }}</p>{% endif %}
+            </div>
+            {% endfor %}
+            <button type="submit" class="btn btn-primary">Submit Review</button>
+        </form>
+        <p style="margin-top: var(--space-2); color: var(--color-text-muted); font-size: 0.85rem;">
+            Reviews are checked before publishing and may take a short while to appear.
+        </p>
+    </div>
+</section>
+{% endblock %}

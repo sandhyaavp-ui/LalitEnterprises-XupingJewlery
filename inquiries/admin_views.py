@@ -4,6 +4,7 @@ from django.shortcuts import render, get_object_or_404
 from django.views.decorators.http import require_POST
 
 from .models import VideoCallBooking, ContactSubmission
+from pages.models import Testimonial
 
 
 @staff_member_required
@@ -11,11 +12,13 @@ def dashboard(request):
     video_calls = VideoCallBooking.objects.filter(booking_type='video_call').order_by('-created_at')
     appointments = VideoCallBooking.objects.filter(booking_type='appointment').order_by('-created_at')
     enquiries = ContactSubmission.objects.order_by('-submitted_at')
+    reviews = Testimonial.objects.order_by('-submitted_at')
 
     return render(request, 'inquiries/dashboard.html', {
         'video_calls': video_calls,
         'appointments': appointments,
         'enquiries': enquiries,
+        'reviews': reviews,
         'video_calls_pending': video_calls.filter(status='pending').count(),
         'video_calls_confirmed': video_calls.filter(status='confirmed').count(),
         'video_calls_completed': video_calls.filter(status='completed').count(),
@@ -24,6 +27,8 @@ def dashboard(request):
         'appointments_confirmed': appointments.filter(status='confirmed').count(),
         'appointments_completed': appointments.filter(status='completed').count(),
         'appointments_cancelled': appointments.filter(status='cancelled').count(),
+        'reviews_pending': reviews.filter(approved=False).count(),
+        'reviews_approved': reviews.filter(approved=True).count(),
     })
 
 

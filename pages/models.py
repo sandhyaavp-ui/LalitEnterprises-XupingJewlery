@@ -15,3 +15,19 @@ class BlogPost(models.Model):
 
     def __str__(self):
         return self.title
+
+
+class Testimonial(models.Model):
+    name = models.CharField(max_length=100)
+    rating = models.PositiveSmallIntegerField(
+        choices=[(1, '1'), (2, '2'), (3, '3'), (4, '4'), (5, '5')]
+    )
+    message = models.TextField()
+    approved = models.BooleanField(default=False)
+    submitted_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        ordering = ['-submitted_at']
+
+    def __str__(self):
+        return f"{self.name} ({self.rating}★)"
