@@ -79,6 +79,29 @@ class Order(models.Model):
         return f'Order #{self.pk} - {self.reseller_name}'
 
 
+class Customer(models.Model):
+    STAGE_CHOICES = [
+        ('new', 'New Lead'),
+        ('contacted', 'Contacted'),
+        ('negotiating', 'Negotiating'),
+        ('ordered', 'Ordered'),
+        ('repeat', 'Repeat Customer'),
+    ]
+    phone = models.CharField(max_length=20, unique=True, db_index=True)
+    name = models.CharField(max_length=150, blank=True)
+    stage = models.CharField(max_length=20, choices=STAGE_CHOICES, default='new')
+    notes = models.TextField(blank=True)
+    next_followup_date = models.DateField(null=True, blank=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        ordering = ['-created_at']
+
+    def __str__(self):
+        return f"{self.name or 'Unknown'} ({self.phone})"
+
+
 class OrderItem(models.Model):
     order = models.ForeignKey(Order, on_delete=models.CASCADE, related_name='items')
     product = models.ForeignKey(Product, on_delete=models.PROTECT)

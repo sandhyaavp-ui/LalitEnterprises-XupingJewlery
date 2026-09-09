@@ -10,13 +10,27 @@ from django.views.decorators.csrf import csrf_protect
 from django.views.decorators.http import require_POST, require_GET
 
 from .forms import ContactForm, AppointmentForm, OrderForm, OrderItemFormSet
-from .models import ContactSubmission, VideoCallBooking
+from .models import ContactSubmission, Customer, VideoCallBooking
+from .utils import normalize_phone
 
 
 def _get_or_create_session_key(request):
     if not request.session.session_key:
         request.session.save()
     return request.session.session_key
+
+
+def _upsert_customer(phone, name):
+    phone_normalized = normalize_phone(phone)
+    if not phone_normalized:
+        return
+    customer, created = Customer.objects.get_or_create(
+        phone=phone_normalized,
+        defaults={'name': name}
+    )
+    if not created and name and not customer.name:
+        customer.name = name
+        customer.save()
 
 
 def contact(request):
@@ -26,6 +40,7 @@ def contact(request):
         if enquiry_form.is_valid():
             enquiry_form.save()
             cd = enquiry_form.cleaned_data
+            _upsert_customer(cd['phone'], cd['name'])
             send_mail(
                 subject=f"New Enquiry from {cd['name']}",
                 message=(
@@ -50,6 +65,7 @@ def contact(request):
             booking.session_key = _get_or_create_session_key(request)
             booking.booking_type = 'appointment'
             booking.save()
+            _upsert_customer(booking.phone, booking.full_name)
             send_mail(
                 subject=f"New Appointment Request from {booking.full_name}",
                 message=(
@@ -109,12 +125,15 @@ def order_form(request):
 @csrf_protect
 def chatbot_enquiry(request):
     data = json.loads(request.body)
+    name = data.get('name', '').strip()
+    phone = data.get('phone', '').strip()
     ContactSubmission.objects.create(
-        name=data.get('name', '').strip(),
-        phone=data.get('phone', '').strip(),
+        name=name,
+        phone=phone,
         email='',
         message=data.get('message', '').strip(),
     )
+    _upsert_customer(phone, name)
     return JsonResponse({'status': 'ok'})
 
 
@@ -132,6 +151,7 @@ def book_video_call(request):
         session_key=session_key,
         booking_type='video_call',
     )
+    _upsert_customer(booking.phone, booking.full_name)
     send_mail(
         subject=f"New Video Call Booking from {booking.full_name}",
         message=(

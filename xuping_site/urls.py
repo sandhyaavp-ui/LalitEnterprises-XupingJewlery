@@ -22,6 +22,7 @@ urlpatterns = [
     # an unmatched sub-path there 404s instead of falling through to app urls.
     path('admin/dashboard/', admin_views.dashboard, name='staff_dashboard'),
     path('admin/dashboard/booking/<int:booking_id>/status/', admin_views.update_booking_status, name='update_booking_status'),
+    path('admin/dashboard/customer/<int:customer_id>/update/', admin_views.update_customer, name='update_customer'),
     path('admin/', admin.site.urls),
     path('sitemap.xml', sitemap, {'sitemaps': sitemaps}, name='django.contrib.sitemaps.views.sitemap'),
     path('robots.txt', robots_txt, name='robots_txt'),
