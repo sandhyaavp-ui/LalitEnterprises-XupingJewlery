@@ -1,0 +1,166 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}About Us — Xuping Jewellery Wholesaler | Lalit Enterprises{% endblock %}
+{% block meta_description %}Lalit Enterprises is an authorised Xuping jewellery wholesaler in Chennai, serving resellers and retailers across India since 2002.{% endblock %}
+
+{% block content %}
+
+<section class="hero">
+    <div class="container">
+        <p class="eyebrow">About Lalit Enterprises</p>
+        <h1>An authorised Xuping agent, built on <em>reseller trust</em>.</h1>
+        <p>We're a Chennai-based wholesale supplier of authentic Xuping jewellery — the everyday-wear, gold-plated imitation jewellery that keeps resellers and retailers stocked across India.</p>
+        <a href="{% url 'inquiries:video_call_booking' %}" class="btn btn-primary">Book a Video Call</a>
+        <a href="{% url 'inquiries:contact' %}" class="btn btn-outline">Send an Enquiry</a>
+    </div>
+</section>
+
+<section class="section">
+    <div class="about-grid">
+        <div class="about-image-col">
+            <p class="eyebrow">Our Story</p>
+            <h2>Two decades supplying India's jewellery resellers.</h2>
+            <img src="{% static 'images/about-model.jpg' %}" alt="Model wearing everyday Xuping gold-plated jewellery" data-aos="fade-right">
+        </div>
+        <div class="about-text-col" data-aos="fade-left">
+            <p>Lalit Enterprises has operated as an authorised Xuping jewellery
+               agent out of Chennai since 2002, supplying wholesale
+               everyday-wear imitation jewellery to resellers, boutique
+               owners and retailers across India.</p>
+            <p>We built this business on a simple idea: resellers do better
+               with a supplier who shows up consistently — same quality,
+               same fair pricing, same stock reliability, order after
+               order — rather than one who treats every sale as a
+               one-off.</p>
+            <p>That's why we offer things larger, faceless suppliers don't:
+               1-on-1 video call consultations to see the actual pieces
+               before you buy, direct WhatsApp access to a real person,
+               and dispatch from Chennai within 24–48 hours of
+               confirmation.</p>
+        </div>
+    </div>
+</section>
+
+<section class="section section-cream" data-aos="fade-up">
+    <div class="container">
+        <h2 class="section-title">Why resellers choose us.</h2>
+        <div class="card-grid feature-card-grid">
+            <div class="card" data-aos="zoom-in" data-aos-delay="0">
+                <div class="card-icon">
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10Z"/>
+                        <path d="m9 12 2 2 4-4"/>
+                    </svg>
+                </div>
+                <h3>Authorised Xuping agent</h3>
+                <p>Genuine stock, traceable and consistent across every reorder — not unbranded lookalikes.</p>
+            </div>
+            <div class="card" data-aos="zoom-in" data-aos-delay="50">
+                <div class="card-icon">
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M21 12V7H5a2 2 0 0 1 0-4h14v4"/>
+                        <path d="M3 5v14a2 2 0 0 0 2 2h16v-5"/>
+                        <path d="M18 12a2 2 0 0 0 0 4h4v-4Z"/>
+                    </svg>
+                </div>
+                <h3>Genuine wholesale pricing</h3>
+                <p>Reseller-first rates with no retail markup and no middlemen in between.</p>
+            </div>
+            <div class="card" data-aos="zoom-in" data-aos-delay="100">
+                <div class="card-icon">
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <rect x="1" y="5" width="15" height="14" rx="2"/>
+                        <path d="m16 10 6-4v12l-6-4"/>
+                    </svg>
+                </div>
+                <h3>1-on-1 video consultations</h3>
+                <p>See the actual finish, colour and weight live on camera before you place an order.</p>
+            </div>
+            <div class="card" data-aos="zoom-in" data-aos-delay="150">
+                <div class="card-icon">
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M1 3h15v13H1z"/>
+                        <path d="M16 8h4l3 3v5h-7V8Z"/>
+                        <circle cx="5.5" cy="18.5" r="2.5"/>
+                        <circle cx="18.5" cy="18.5" r="2.5"/>
+                    </svg>
+                </div>
+                <h3>Fast dispatch from Chennai</h3>
+                <p>Confirmed orders ship within 24–48 hours, pan-India.</p>
+            </div>
+            <div class="card" data-aos="zoom-in" data-aos-delay="200">
+                <div class="card-icon">
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M13 2 3 14h8l-1 8 10-12h-8l1-8Z"/>
+                    </svg>
+                </div>
+                <h3>Fair, fixed MOQ</h3>
+                <p>Earrings &amp; rings: 6 pieces minimum. All others: 2 pieces minimum — consistent for every order.</p>
+            </div>
+            <div class="card" data-aos="zoom-in" data-aos-delay="250">
+                <div class="card-icon">
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M21 2v6h-6"/>
+                        <path d="M3 12a9 9 0 0 1 15-6.7L21 8"/>
+                        <path d="M3 22v-6h6"/>
+                        <path d="M21 12a9 9 0 0 1-15 6.7L3 16"/>
+                    </svg>
+                </div>
+                <h3>Fresh stock every month</h3>
+                <p>New Xuping styles added monthly, so your store never looks stale.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="section stats-section">
+    <div class="container stats-grid" data-aos="fade-up">
+        <div>
+            <div class="stat-number" data-countup="2002">0</div>
+            <p>Since</p>
+        </div>
+        <div>
+            <div class="stat-number" data-countup="1000" data-suffix="+">0</div>
+            <p>Designs Available</p>
+        </div>
+        <div>
+            <div class="stat-number" data-countup="35" data-suffix="+">0</div>
+            <p>Cities Served</p>
+        </div>
+    </div>
+</section>
+
+<section class="section" data-aos="fade-up">
+    <div class="container">
+        <h2 class="section-title">What we supply.</h2>
+        <div class="card-grid collection-card-grid">
+            {% for collection in collections %}
+            <a href="{% url 'catalog:collection_detail' slug=collection.slug %}" class="card" data-aos="zoom-in" data-aos-delay="{% widthratio forloop.counter0 1 50 %}">
+                {% if collection.image %}
+                <img src="{{ collection.image.url }}" alt="{{ collection.name }} — wholesale imitation jewellery collection">
+                {% else %}
+                <div class="card-image-placeholder"></div>
+                {% endif %}
+                <h3>{{ collection.name }}</h3>
+                <span class="card-link">View designs →</span>
+            </a>
+            {% endfor %}
+        </div>
+        <p class="text-center">Prefer to talk it through first? <a href="{% url 'inquiries:contact' %}#appointment">Request an appointment</a> and we'll call you back.</p>
+    </div>
+</section>
+
+<section class="section section-cream" data-aos="fade-up">
+    <div class="container">
+        <h2 class="section-title">Ready to stock up?</h2>
+        <p class="text-center">Browse the collection, book a video call, or send us your requirements directly.</p>
+        <div class="actions-row">
+            <a href="{% url 'inquiries:video_call_booking' %}" class="btn btn-primary">Book a Video Call</a>
+            <a href="{% url 'inquiries:contact' %}" class="btn btn-outline">Send an Enquiry</a>
+            <a href="{% url 'inquiries:contact' %}#appointment" class="btn btn-outline">Request an Appointment</a>
+        </div>
+    </div>
+</section>
+
+{% endblock %}

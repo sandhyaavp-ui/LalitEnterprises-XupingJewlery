@@ -8,6 +8,11 @@ def home(request):
     return render(request, 'pages/home.html', {'collections': collections})
 
 
+def about(request):
+    collections = Collection.objects.all()
+    return render(request, 'pages/about.html', {'collections': collections})
+
+
 def blogs(request):
     posts = BlogPost.objects.all()
     return render(request, 'pages/blogs.html', {'posts': posts})
