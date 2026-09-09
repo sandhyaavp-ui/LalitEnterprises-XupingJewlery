@@ -3,9 +3,9 @@ from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib.sitemaps.views import sitemap
-from django.http import HttpResponse
 
 from inquiries import admin_views
+from pages.views import robots_txt
 from .sitemaps import StaticViewSitemap, ProductSitemap, CollectionSitemap, BlogSitemap
 
 sitemaps = {
@@ -14,12 +14,6 @@ sitemaps = {
     'collections': CollectionSitemap,
     'blogs': BlogSitemap,
 }
-
-
-def robots_txt(request):
-    sitemap_url = request.build_absolute_uri('/sitemap.xml')
-    content = f"User-agent: *\nAllow: /\nSitemap: {sitemap_url}\n"
-    return HttpResponse(content, content_type='text/plain')
 
 
 urlpatterns = [

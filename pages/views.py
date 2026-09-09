@@ -1,3 +1,4 @@
+from django.http import HttpResponse
 from django.shortcuts import render, get_object_or_404
 from catalog.models import Collection
 from .models import BlogPost
@@ -29,3 +30,14 @@ def terms(request):
 
 def privacy(request):
     return render(request, 'pages/privacy.html')
+
+
+def robots_txt(request):
+    content = """User-agent: *
+Disallow: /admin/
+Disallow: /admin/dashboard/
+Allow: /
+
+Sitemap: https://lalitenterprise.in/sitemap.xml
+"""
+    return HttpResponse(content, content_type='text/plain')
