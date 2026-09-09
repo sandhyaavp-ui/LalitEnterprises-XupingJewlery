@@ -17,6 +17,7 @@
 <link rel="icon" type="image/png" href="{% static 'images/favicon.png' %}">
 <meta name="description" content="{% block meta_description %}Authentic Xuping jewellery at genuine wholesale prices. Everyday-wear imitation jewellery for resellers and retailers across India.{% endblock %}">
 <meta name="keywords" content="{% block meta_keywords %}Xuping jewellery, imitation jewellery, jewellery wholesaler, anti-tarnish jewellery, non-allergic jewellery, everyday wear jewellery, B2B jewellery wholesaler, wholesale jewellery, jewellery supplier, CZ jewellery, best place to buy bulk jewellery, gold plated jewellery, imitation jewellery supplier, bulk jewellery supplier, imitation jewellery in bulk, imitation jewellery supplier India, jewellery supplier for boutiques, wholesale jewellery for resellers{% endblock %}">
+<link rel="canonical" href="{% block canonical_url %}https://lalitenterprise.in{{ request.path }}{% endblock %}">
 {% with og_title="Lalit Enterprises — Authentic Xuping Jewellery Wholesale" og_description="Authentic Xuping wholesale jewellery for resellers across India. Browse designs, check MOQ, and book a free video call." og_image=request.scheme|add:"://"|add:request.get_host|add:"/static/images/og-banner.jpg" %}
 <meta property="og:type" content="website">
 <meta property="og:url" content="{{ request.build_absolute_uri }}">
