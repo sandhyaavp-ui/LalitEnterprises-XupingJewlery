@@ -162,22 +162,9 @@ MEDIA_ROOT = BASE_DIR / 'media'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-# Email notifications on form submission. EMAIL_HOST_USER/PASSWORD default to
-# '' so the site doesn't crash before these are configured — every send_mail()
-# call uses fail_silently=True, so a missing/wrong credential just skips the
-# notification instead of breaking the form submission.
-EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_PORT = 587
-EMAIL_USE_TLS = True
-EMAIL_HOST_USER = config('EMAIL_HOST_USER', default='')
-EMAIL_HOST_PASSWORD = config('EMAIL_HOST_PASSWORD', default='')
-NOTIFY_EMAIL = config('NOTIFY_EMAIL', default=EMAIL_HOST_USER)
-
-# Without this, a blocked/slow outbound SMTP connection hangs indefinitely,
-# and gunicorn's own worker timeout eventually SIGABRTs the entire worker
-# process — which happens *before* fail_silently=True ever gets a chance to
-# catch anything, since that only wraps normal Python exceptions, not the
-# worker being killed out from under the request. This makes the SMTP
-# connection attempt fail fast with a normal (catchable) timeout instead.
-EMAIL_TIMEOUT = 10
+# Email notifications on form submission, sent via the Resend HTTP API
+# (see inquiries/email_utils.py) rather than raw SMTP — Railway blocks
+# outbound SMTP ports (587/25) at the platform level, so smtp.gmail.com was
+# never reachable in production regardless of credentials or timeouts.
+NOTIFY_EMAIL = config('NOTIFY_EMAIL', default='')
+RESEND_API_KEY = config('RESEND_API_KEY', default='')

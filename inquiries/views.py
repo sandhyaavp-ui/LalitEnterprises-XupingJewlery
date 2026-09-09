@@ -1,14 +1,13 @@
 import json
 from datetime import date
 
-from django.conf import settings
 from django.contrib import messages
-from django.core.mail import send_mail
 from django.http import JsonResponse
 from django.shortcuts import render, redirect
 from django.views.decorators.csrf import csrf_protect
 from django.views.decorators.http import require_POST, require_GET
 
+from .email_utils import send_notification_email
 from .forms import ContactForm, AppointmentForm, OrderForm, OrderItemFormSet
 from .models import ContactSubmission, Customer, VideoCallBooking
 from .utils import normalize_phone
@@ -41,7 +40,7 @@ def contact(request):
             enquiry_form.save()
             cd = enquiry_form.cleaned_data
             _upsert_customer(cd['phone'], cd['name'])
-            send_mail(
+            send_notification_email(
                 subject=f"New Enquiry from {cd['name']}",
                 message=(
                     f"New enquiry received:\n\n"
@@ -51,9 +50,6 @@ def contact(request):
                     f"Product interest: {cd.get('product_interest') or '(not provided)'}\n"
                     f"Message: {cd.get('message') or '(not provided)'}"
                 ),
-                from_email=settings.EMAIL_HOST_USER,
-                recipient_list=[settings.NOTIFY_EMAIL],
-                fail_silently=True,
             )
             messages.success(request, "Thanks for your enquiry — we reply the same working day.")
             return redirect('inquiries:contact')
@@ -66,7 +62,7 @@ def contact(request):
             booking.booking_type = 'appointment'
             booking.save()
             _upsert_customer(booking.phone, booking.full_name)
-            send_mail(
+            send_notification_email(
                 subject=f"New Appointment Request from {booking.full_name}",
                 message=(
                     f"New appointment request:\n\n"
@@ -75,9 +71,6 @@ def contact(request):
                     f"Preferred Date: {booking.preferred_date}\n"
                     f"Preferred Time: {booking.preferred_time}"
                 ),
-                from_email=settings.EMAIL_HOST_USER,
-                recipient_list=[settings.NOTIFY_EMAIL],
-                fail_silently=True,
             )
             messages.success(request, "Your appointment request has been received — we'll confirm by phone.")
             return redirect('inquiries:contact')
@@ -152,7 +145,7 @@ def book_video_call(request):
         booking_type='video_call',
     )
     _upsert_customer(booking.phone, booking.full_name)
-    send_mail(
+    send_notification_email(
         subject=f"New Video Call Booking from {booking.full_name}",
         message=(
             f"New video call booking:\n\n"
@@ -162,9 +155,6 @@ def book_video_call(request):
             f"Preferred Date: {booking.preferred_date}\n"
             f"Preferred Time: {booking.preferred_time}"
         ),
-        from_email=settings.EMAIL_HOST_USER,
-        recipient_list=[settings.NOTIFY_EMAIL],
-        fail_silently=True,
     )
     return JsonResponse({'status': 'ok'})
 
