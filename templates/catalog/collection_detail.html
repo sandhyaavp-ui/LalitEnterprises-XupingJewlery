@@ -1,6 +1,34 @@
 {% extends 'base.html' %}
 {% block title %}{{ collection.name }} Collection — Wholesale | Lalit Enterprises{% endblock %}
 {% block meta_description %}{% if collection.description %}{{ collection.description|truncatewords:25 }}{% else %}Wholesale {{ collection.name }} jewellery — anti-tarnish, gold-plated, imitation jewellery in bulk for resellers across India.{% endif %}{% endblock %}
+{% block structured_data %}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "Home",
+      "item": "https://lalitenterprise.in/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "Products",
+      "item": "https://lalitenterprise.in{% url 'catalog:product_list' %}"
+    },
+    {
+      "@type": "ListItem",
+      "position": 3,
+      "name": "{{ collection.name|escapejs }}",
+      "item": "https://lalitenterprise.in{% url 'catalog:collection_detail' slug=collection.slug %}"
+    }
+  ]
+}
+</script>
+{% endblock %}
 
 {% block content %}
 <section class="hero">

@@ -31,6 +31,28 @@
 <meta name="twitter:description" content="{{ og_description }}">
 <meta name="twitter:image" content="{{ og_image }}">
 {% endwith %}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  "name": "Lalit Enterprises - Xuping Jewellery Wholesale",
+  "url": "https://lalitenterprise.in",
+  "logo": "{{ request.scheme }}://{{ request.get_host }}{% static 'images/favicon.png' %}",
+  "telephone": "+919841066880",
+  "address": {
+    "@type": "PostalAddress",
+    "streetAddress": "39/2 EK, Agraharam St, Edapalaiyam, Park Town",
+    "addressLocality": "Chennai",
+    "addressRegion": "Tamil Nadu",
+    "postalCode": "600003",
+    "addressCountry": "IN"
+  },
+  "sameAs": [
+    "https://www.instagram.com/xupingjewelery_india"
+  ]
+}
+</script>
+{% block structured_data %}{% endblock %}
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700;1,600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">

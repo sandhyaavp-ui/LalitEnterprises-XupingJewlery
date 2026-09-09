@@ -1,5 +1,27 @@
 {% extends 'base.html' %}
 {% block title %}Terms of Service — Lalit Enterprises{% endblock %}
+{% block structured_data %}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "Home",
+      "item": "https://lalitenterprise.in/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "Terms of Service",
+      "item": "https://lalitenterprise.in{% url 'pages:terms' %}"
+    }
+  ]
+}
+</script>
+{% endblock %}
 {% block content %}
 <div class="container container-narrow legal-page">
   <h1>Terms of Service</h1>

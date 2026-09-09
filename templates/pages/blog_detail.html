@@ -1,6 +1,34 @@
 {% extends 'base.html' %}
 {% block title %}{{ post.title }} | Lalit Enterprises{% endblock %}
 {% block meta_description %}{{ post.excerpt|truncatewords:25 }}{% endblock %}
+{% block structured_data %}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "Home",
+      "item": "https://lalitenterprise.in/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "Blogs",
+      "item": "https://lalitenterprise.in{% url 'pages:blogs' %}"
+    },
+    {
+      "@type": "ListItem",
+      "position": 3,
+      "name": "{{ post.title|escapejs }}",
+      "item": "https://lalitenterprise.in{% url 'pages:blog_detail' slug=post.slug %}"
+    }
+  ]
+}
+</script>
+{% endblock %}
 
 {% block content %}
 <section class="hero">

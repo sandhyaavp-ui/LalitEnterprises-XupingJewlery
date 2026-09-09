@@ -1,6 +1,28 @@
 {% extends 'base.html' %}
 {% block title %}Wholesale Xuping Jewellery Collections | Lalit Enterprises{% endblock %}
 {% block meta_description %}Browse our imitation jewellery collections — anti-tarnish, gold-plated, non-allergic designs. Bulk wholesale pricing for resellers and boutiques.{% endblock %}
+{% block structured_data %}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "Home",
+      "item": "https://lalitenterprise.in/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "Products",
+      "item": "https://lalitenterprise.in{% url 'catalog:product_list' %}"
+    }
+  ]
+}
+</script>
+{% endblock %}
 
 {% block content %}
 <section class="hero">

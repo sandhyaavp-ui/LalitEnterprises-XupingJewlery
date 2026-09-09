@@ -2,6 +2,54 @@
 {% load static %}
 {% block title %}{{ product.name }} — {{ product.collection.name }} | Lalit Enterprises{% endblock %}
 {% block meta_description %}{% if product.description %}{{ product.description|truncatewords:25 }}{% else %}{{ product.name }} — wholesale {{ product.collection.name }} jewellery from Lalit Enterprises. Anti-tarnish, gold-plated, imitation jewellery in bulk for resellers.{% endif %}{% endblock %}
+{% block structured_data %}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Product",
+  "name": "{{ product.name|escapejs }}",
+  "image": "{{ product.image.url|escapejs }}",
+  "description": "{% if product.description %}{{ product.description|escapejs }}{% else %}{{ product.name|escapejs }} — wholesale {{ product.collection.name|escapejs }} jewellery from Lalit Enterprises.{% endif %}",
+  "brand": {
+    "@type": "Brand",
+    "name": "Xuping"
+  },
+  "category": "{{ product.collection.name|escapejs }}"
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "Home",
+      "item": "https://lalitenterprise.in/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "Products",
+      "item": "https://lalitenterprise.in{% url 'catalog:product_list' %}"
+    },
+    {
+      "@type": "ListItem",
+      "position": 3,
+      "name": "{{ product.collection.name|escapejs }}",
+      "item": "https://lalitenterprise.in{% url 'catalog:collection_detail' slug=product.collection.slug %}"
+    },
+    {
+      "@type": "ListItem",
+      "position": 4,
+      "name": "{{ product.name|escapejs }}",
+      "item": "https://lalitenterprise.in{% url 'catalog:product_detail' slug=product.slug %}"
+    }
+  ]
+}
+</script>
+{% endblock %}
 {% block content %}
 
 <div class="container product-detail-topbar">
