@@ -15,7 +15,7 @@
             {% for collection in results %}
             <a href="{% url 'catalog:collection_detail' slug=collection.slug %}" class="card">
                 {% if collection.image %}
-                <img src="{{ collection.image.url }}" alt="{{ collection.name }}">
+                <img src="{{ collection.image.url }}" alt="{{ collection.name }} — wholesale imitation jewellery collection">
                 {% else %}
                 <div class="card-image-placeholder"></div>
                 {% endif %}

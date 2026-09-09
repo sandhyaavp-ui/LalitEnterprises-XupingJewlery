@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 {% load static %}
 {% block title %}{{ product.name }} — {{ product.collection.name }} | Lalit Enterprises{% endblock %}
-{% block meta_description %}{{ product.description|default:product.name|truncatewords:25 }}{% endblock %}
+{% block meta_description %}{% if product.description %}{{ product.description|truncatewords:25 }}{% else %}{{ product.name }} — wholesale {{ product.collection.name }} jewellery from Lalit Enterprises. Anti-tarnish, gold-plated, imitation jewellery in bulk for resellers.{% endif %}{% endblock %}
 {% block content %}
 
 <div class="container product-detail-topbar">
