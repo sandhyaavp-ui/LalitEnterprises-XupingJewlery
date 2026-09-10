@@ -1,0 +1,29 @@
+/* Self-hosted fonts (previously fonts.googleapis.com) — eliminates the
+   external DNS/connect/CSS/font-file request chain Lighthouse flagged as
+   render-blocking. Same two variable font files Google itself serves for
+   these weight ranges (confirmed by their own CSS reusing one file across
+   multiple font-weight declarations). */
+
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 400 600;
+  font-display: swap;
+  src: url('../fonts/inter-variable.woff2') format('woff2');
+}
+
+@font-face {
+  font-family: 'Playfair Display';
+  font-style: normal;
+  font-weight: 600 700;
+  font-display: swap;
+  src: url('../fonts/playfair-display-normal.woff2') format('woff2');
+}
+
+@font-face {
+  font-family: 'Playfair Display';
+  font-style: italic;
+  font-weight: 600;
+  font-display: swap;
+  src: url('../fonts/playfair-display-italic.woff2') format('woff2');
+}
