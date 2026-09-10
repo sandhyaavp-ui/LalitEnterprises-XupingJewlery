@@ -1219,7 +1219,7 @@ textarea.form-control { resize: vertical; min-height: 100px; }
 
   .nav-links li { width: 100%; }
   .nav-links a { display: block; padding: 12px 0; }
-  .nav-underline { display: none; } /* underline hover effect is desktop-only */
+  .nav-links li::after { display: none; } /* underline hover effect is desktop-only */
 
   .hero h1 { font-size: 1.5rem; line-height: 1.3; }
   .hero .eyebrow { font-size: 0.7rem; }
@@ -1239,14 +1239,14 @@ textarea.form-control { resize: vertical; min-height: 100px; }
 }
 
 /* ==========================================================================
-   Hover polish (nav underline element, reduced-motion guard).
-   Scroll animations are now handled entirely by AOS (see base.html).
+   Hover polish (pure CSS — no JS/GSAP needed for these two effects).
+   Scroll animations are handled entirely by AOS (see base.html).
    ========================================================================== */
 
-/* Underline element for GSAP-driven nav hover animation (see nav-gsap.js) */
 .nav-links li { position: relative; }
 
-.nav-underline {
+.nav-links li::after {
+  content: '';
   position: absolute;
   left: 0;
   bottom: -6px;
@@ -1254,10 +1254,19 @@ textarea.form-control { resize: vertical; min-height: 100px; }
   width: 0;
   background: var(--color-gold);
   border-radius: 2px;
+  transition: width 0.25s ease;
 }
 
+.nav-links li:hover::after,
+.nav-links li:has(a.is-active)::after {
+  width: 100%;
+}
+
+.logo { transition: transform 0.2s ease; }
+.logo:hover { transform: scale(1.03); }
+
 @media (prefers-reduced-motion: reduce) {
-  .btn, a, .nav-underline {
+  .btn, a, .logo, .nav-links li::after {
     animation: none !important;
     transition: none !important;
   }

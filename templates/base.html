@@ -60,7 +60,8 @@
 <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
 <noscript><link href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css" rel="stylesheet"></noscript>
 <link rel="stylesheet" href="{% static 'css/style.css' %}">
-<link rel="stylesheet" href="{% static 'css/chatbot.css' %}">
+<link rel="preload" href="{% static 'css/chatbot.css' %}" as="style" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="{% static 'css/chatbot.css' %}"></noscript>
 </head>
 <body>
 
@@ -171,7 +172,6 @@
 <script src="{% static 'js/chatbot.js' %}" defer></script>
 <script src="{% static 'js/accordion.js' %}" defer></script>
 <script src="{% static 'js/countup.js' %}" defer></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js" defer></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js" defer></script>
 <script>
 document.addEventListener('DOMContentLoaded', function () {
@@ -183,7 +183,6 @@ document.addEventListener('DOMContentLoaded', function () {
   });
 });
 </script>
-<script src="{% static 'js/nav-gsap.js' %}" defer></script>
 <script src="{% static 'js/mobile-nav.js' %}" defer></script>
 {% block extra_scripts %}{% endblock %}
 </body>

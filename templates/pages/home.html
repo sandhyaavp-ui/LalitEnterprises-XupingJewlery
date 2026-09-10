@@ -25,7 +25,10 @@
         <div class="about-image-col">
             <p class="eyebrow">About Us</p>
             <h2>A trusted bridge between Xuping and India's reseller network.</h2>
-            <img src="{% static 'images/about-model.jpg' %}" alt="Model wearing everyday Xuping gold-plated jewellery" data-aos="fade-right">
+            <picture>
+                <source srcset="{% static 'images/about-model.webp' %}" type="image/webp">
+                <img src="{% static 'images/about-model.jpg' %}" alt="Model wearing everyday Xuping gold-plated jewellery" data-aos="fade-right">
+            </picture>
         </div>
         <div class="about-text-col" data-aos="fade-left">
             <p>Lalit Enterprises is an authorised Xuping jewellery agent based in
