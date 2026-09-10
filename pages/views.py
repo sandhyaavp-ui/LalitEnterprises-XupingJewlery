@@ -14,7 +14,12 @@ def home(request):
 def about(request):
     collections = Collection.objects.all()
     testimonials = Testimonial.objects.filter(approved=True)
-    return render(request, 'pages/about.html', {'collections': collections, 'testimonials': testimonials})
+    review_form = TestimonialForm()
+    return render(request, 'pages/about.html', {
+        'collections': collections,
+        'testimonials': testimonials,
+        'review_form': review_form,
+    })
 
 
 def blogs(request):

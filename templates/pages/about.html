@@ -158,7 +158,21 @@
             {% endfor %}
         </div>
         {% endif %}
-        <p class="text-center"><a href="{% url 'pages:submit_review' %}">Leave a review</a> if you've bought from us before.</p>
+        <div class="form-wrapper" id="leave-review">
+            <h3 class="section-title">Leave a review</h3>
+            <p class="text-center">Bought from us before? Tell other resellers what it's like to work with us.</p>
+            <form method="post" action="{% url 'pages:submit_review' %}">
+                {% csrf_token %}
+                {% for field in review_form %}
+                <div class="form-group">
+                    <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+                    {{ field }}
+                    {% if field.errors %}<p class="form-error">{{ field.errors|striptags }}</p>{% endif %}
+                </div>
+                {% endfor %}
+                <button type="submit" class="btn btn-primary">Submit Review</button>
+            </form>
+        </div>
     </div>
 </section>
 
