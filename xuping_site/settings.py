@@ -168,3 +168,33 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 # never reachable in production regardless of credentials or timeouts.
 NOTIFY_EMAIL = config('NOTIFY_EMAIL', default='')
 RESEND_API_KEY = config('RESEND_API_KEY', default='')
+
+# Django's built-in unhandled-500-error email alert, wired to send via
+# Resend (xuping_site/logging_handlers.py) instead of its default
+# SMTP-based mail_admins() — same reason as above, plain SMTP doesn't
+# work here. Only fires when DEBUG=False (production).
+ADMINS = [('Lalit Enterprises', NOTIFY_EMAIL)] if NOTIFY_EMAIL else []
+
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'filters': {
+        'require_debug_false': {
+            '()': 'django.utils.log.RequireDebugFalse',
+        },
+    },
+    'handlers': {
+        'mail_admins': {
+            'level': 'ERROR',
+            'filters': ['require_debug_false'],
+            'class': 'xuping_site.logging_handlers.ResendAdminEmailHandler',
+        },
+    },
+    'loggers': {
+        'django.request': {
+            'handlers': ['mail_admins'],
+            'level': 'ERROR',
+            'propagate': True,
+        },
+    },
+}
