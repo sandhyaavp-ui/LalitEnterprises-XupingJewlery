@@ -1,5 +1,6 @@
 {% extends 'base.html' %}
 {% load static %}
+{% load cloudinary_filters %}
 
 {% block title %}About Us — Xuping Jewellery Wholesaler | Lalit Enterprises{% endblock %}
 {% block meta_description %}Lalit Enterprises is an authorised Xuping jewellery wholesaler in Chennai, serving resellers and retailers across India since 2002.{% endblock %}
@@ -182,7 +183,7 @@
             {% for collection in collections %}
             <a href="{% url 'catalog:collection_detail' slug=collection.slug %}" class="card" data-aos="zoom-in" data-aos-delay="{% widthratio forloop.counter0 1 50 %}">
                 {% if collection.image %}
-                <img src="{{ collection.image.url }}" alt="{{ collection.name }} — wholesale imitation jewellery collection">
+                <img src="{{ collection.image.url|cloudinary_optimize }}" alt="{{ collection.name }} — wholesale imitation jewellery collection">
                 {% else %}
                 <div class="card-image-placeholder"></div>
                 {% endif %}

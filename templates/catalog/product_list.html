@@ -1,4 +1,6 @@
 {% extends 'base.html' %}
+{% load static %}
+{% load cloudinary_filters %}
 {% block title %}Wholesale Xuping Jewellery Collections | Lalit Enterprises{% endblock %}
 {% block meta_description %}Browse our imitation jewellery collections — anti-tarnish, gold-plated, non-allergic designs. Bulk wholesale pricing for resellers and boutiques.{% endblock %}
 {% block structured_data %}
@@ -39,7 +41,7 @@
             {% for collection in collections %}
             <a href="{% url 'catalog:collection_detail' slug=collection.slug %}" class="card" data-aos="zoom-in" data-aos-delay="{% widthratio forloop.counter0 1 50 %}">
                 {% if collection.image %}
-                <img src="{{ collection.image.url }}" alt="{{ collection.name }} — wholesale imitation jewellery collection">
+                <img src="{{ collection.image.url|cloudinary_optimize }}" alt="{{ collection.name }} — wholesale imitation jewellery collection">
                 {% else %}
                 <div class="card-image-placeholder"></div>
                 {% endif %}
@@ -75,7 +77,7 @@
            data-collection="{{ product.collection.slug }}"
            data-name="{{ product.name|lower }}">
             {% if product.image %}
-            <img src="{{ product.image.url }}" alt="{{ product.name }}">
+            <img src="{{ product.image.url|cloudinary_optimize }}" alt="{{ product.name }}">
             {% else %}
             <div class="card-image-placeholder"></div>
             {% endif %}
@@ -86,4 +88,8 @@
         {% endfor %}
     </div>
 </section>
+{% endblock %}
+
+{% block extra_scripts %}
+<script src="{% static 'js/product-filter.js' %}" defer></script>
 {% endblock %}

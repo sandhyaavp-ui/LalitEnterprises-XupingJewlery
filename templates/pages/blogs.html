@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load cloudinary_filters %}
 {% block title %}Jewellery Reseller Guides & Tips — Lalit Enterprises Blog{% endblock %}
 {% block meta_description %}Guides on reselling Xuping and imitation jewellery — sourcing, pricing, and running a jewellery business, from Lalit Enterprises.{% endblock %}
 {% block structured_data %}
@@ -39,7 +40,7 @@
             {% for post in posts %}
             <div class="card card-compact" data-aos="zoom-in" data-aos-delay="{% widthratio forloop.counter0 1 50 %}">
                 {% if post.thumbnail %}
-                <img src="{{ post.thumbnail.url }}" alt="{{ post.title }}">
+                <img src="{{ post.thumbnail.url|cloudinary_optimize }}" alt="{{ post.title }}">
                 {% else %}
                 <div class="card-image-placeholder"></div>
                 {% endif %}

@@ -1,5 +1,6 @@
 {% extends 'base.html' %}
 {% load static %}
+{% load cloudinary_filters %}
 {% block title %}{{ product.name }} — {{ product.collection.name }} | Lalit Enterprises{% endblock %}
 {% block meta_description %}{% if product.description %}{{ product.description|truncatewords:25 }}{% else %}{{ product.name }} — wholesale {{ product.collection.name }} jewellery from Lalit Enterprises. Anti-tarnish, gold-plated, imitation jewellery in bulk for resellers.{% endif %}{% endblock %}
 {% block structured_data %}
@@ -8,7 +9,7 @@
   "@context": "https://schema.org",
   "@type": "Product",
   "name": "{{ product.name|escapejs }}",
-  "image": "{{ product.image.url|escapejs }}",
+  "image": "{{ product.image.url|cloudinary_optimize|escapejs }}",
   "description": "{% if product.description %}{{ product.description|escapejs }}{% else %}{{ product.name|escapejs }} — wholesale {{ product.collection.name|escapejs }} jewellery from Lalit Enterprises.{% endif %}",
   "brand": {
     "@type": "Brand",
@@ -64,8 +65,8 @@
   <div class="product-detail-main">
     {% if product.image %}
     <div class="product-detail-image-wrap">
-      <img src="{{ product.image.url }}" alt="{{ product.name }}" class="product-detail-image">
-      <button type="button" class="image-zoom-btn" data-full-src="{{ product.image.url }}" data-full-alt="{{ product.name }}" aria-label="View full-size image of {{ product.name }}">🔍</button>
+      <img src="{{ product.image.url|cloudinary_optimize }}" alt="{{ product.name }}" class="product-detail-image">
+      <button type="button" class="image-zoom-btn" data-full-src="{{ product.image.url|cloudinary_optimize }}" data-full-alt="{{ product.name }}" aria-label="View full-size image of {{ product.name }}">🔍</button>
     </div>
     {% else %}
     <div class="card-image-placeholder product-detail-image"></div>
@@ -93,7 +94,7 @@
     {% for item in complete_the_pair %}
     <a href="{% url 'catalog:product_detail' slug=item.slug %}" class="pair-item">
       {% if item.image %}
-      <img src="{{ item.image.url }}" alt="{{ item.name }}">
+      <img src="{{ item.image.url|cloudinary_optimize }}" alt="{{ item.name }}">
       {% else %}
       <div class="card-image-placeholder"></div>
       {% endif %}
@@ -115,7 +116,7 @@
     {% for item in recommended %}
     <a href="{% url 'catalog:product_detail' slug=item.slug %}" class="card">
       {% if item.image %}
-      <img src="{{ item.image.url }}" alt="{{ item.name }}">
+      <img src="{{ item.image.url|cloudinary_optimize }}" alt="{{ item.name }}">
       {% else %}
       <div class="card-image-placeholder"></div>
       {% endif %}
@@ -136,6 +137,6 @@
 
 {% block extra_scripts %}
 {% if product.image %}
-<script src="{% static 'js/image-lightbox.js' %}"></script>
+<script src="{% static 'js/image-lightbox.js' %}" defer></script>
 {% endif %}
 {% endblock %}

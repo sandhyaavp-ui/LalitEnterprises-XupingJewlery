@@ -1,5 +1,6 @@
 {% extends 'base.html' %}
 {% load static %}
+{% load cloudinary_filters %}
 
 {% block title %}Lalit Enterprises — Xuping Jewellery Wholesaler in Chennai{% endblock %}
 {% block meta_description %}B2B Xuping jewellery wholesaler in Chennai. Anti-tarnish, non-allergic, gold-plated jewellery in bulk for resellers and retailers across India.{% endblock %}
@@ -48,7 +49,7 @@
             {% for collection in collections %}
             <a href="{% url 'catalog:collection_detail' slug=collection.slug %}" class="card" data-aos="zoom-in" data-aos-delay="{% widthratio forloop.counter0 1 50 %}">
                 {% if collection.image %}
-                <img src="{{ collection.image.url }}" alt="{{ collection.name }} — wholesale imitation jewellery collection">
+                <img src="{{ collection.image.url|cloudinary_optimize }}" alt="{{ collection.name }} — wholesale imitation jewellery collection">
                 {% else %}
                 <div class="card-image-placeholder"></div>
                 {% endif %}

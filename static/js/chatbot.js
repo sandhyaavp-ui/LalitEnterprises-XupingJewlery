@@ -108,7 +108,7 @@
       msg.textContent = text;
     }
     body.appendChild(msg);
-    body.scrollTop = body.scrollHeight;
+    requestAnimationFrame(function () { body.scrollTop = body.scrollHeight; });
   }
 
   function addQuickReplies(options) {
@@ -121,7 +121,7 @@
       wrap.appendChild(btn);
     });
     body.appendChild(wrap);
-    body.scrollTop = body.scrollHeight;
+    requestAnimationFrame(function () { body.scrollTop = body.scrollHeight; });
   }
 
   function showMenu() {
