@@ -93,7 +93,7 @@
     <ul class="nav-links">
         <li><a href="{% url 'pages:home' %}" class="{% if request.path == '/' %}is-active{% endif %}">Home</a></li>
         <li><a href="{% url 'pages:about' %}" class="{% if '/about' in request.path %}is-active{% endif %}">About</a></li>
-        <li><a href="{% url 'catalog:product_list' %}" class="{% if '/products' in request.path or '/collection/' in request.path %}is-active{% endif %}">Products</a></li>
+        <li><a href="{% url 'catalog:product_list' %}" class="{% if '/products' in request.path or '/collection/' in request.path or '/product/' in request.path %}is-active{% endif %}">Products</a></li>
         <li><a href="{% url 'pages:blogs' %}" class="{% if '/blogs' in request.path %}is-active{% endif %}">Blogs</a></li>
         <li><a href="{% url 'inquiries:video_call_booking' %}" class="{% if '/video-call' in request.path %}is-active{% endif %}">Book Video Call</a></li>
         <li><a href="{% url 'inquiries:contact' %}" class="{% if '/contact' in request.path %}is-active{% endif %}">Contact</a></li>
