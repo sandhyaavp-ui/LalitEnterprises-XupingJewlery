@@ -1,23 +1,24 @@
-"""One-off: re-encode static/images/about-model.jpg as a right-sized WebP
-(with a compressed JPEG fallback for browsers without WebP support).
+"""One-off: derive a mobile-sized WebP+JPEG variant of about-model.jpg.
 
-Original is 1023x1537 or 296KB. Displayed at max ~570px wide (.about-grid
-is 1140px max, two equal columns), so 900px wide is plenty even for 2x
-retina, and re-encoding at a sane quality cuts the rest.
+.about-grid goes full-width single-column below 800px (mobile) but
+~550px per column above that (desktop two-up) — the original pass only
+generated one size (900px, right for desktop), so mobile was
+downloading a file sized for a display area 2-3x wider than it actually
+renders at. Re-deriving from the already-900px source loses no visible
+detail at a 500px target.
 
 Run once: venv/Scripts/python.exe scripts/optimize_about_model.py
 """
 from PIL import Image
 
 SRC = 'static/images/about-model.jpg'
-MAX_WIDTH = 900
+MOBILE_WIDTH = 500
 
 img = Image.open(SRC).convert('RGB')
-if img.width > MAX_WIDTH:
-    ratio = MAX_WIDTH / img.width
-    img = img.resize((MAX_WIDTH, round(img.height * ratio)), Image.LANCZOS)
+ratio = MOBILE_WIDTH / img.width
+img = img.resize((MOBILE_WIDTH, round(img.height * ratio)), Image.LANCZOS)
 
-img.save('static/images/about-model.webp', 'WEBP', quality=82)
-img.save('static/images/about-model.jpg', 'JPEG', quality=80, optimize=True)
+img.save('static/images/about-model-mobile.webp', 'WEBP', quality=82)
+img.save('static/images/about-model-mobile.jpg', 'JPEG', quality=80, optimize=True)
 
-print('about-model.webp:', img.size)
+print('about-model-mobile:', img.size)

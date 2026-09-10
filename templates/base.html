@@ -54,7 +54,29 @@
 }
 </script>
 {% block structured_data %}{% endblock %}
-<link rel="stylesheet" href="{% static 'css/fonts.css' %}">
+<style>
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 400 600;
+  font-display: swap;
+  src: url('{% static "fonts/inter-variable.woff2" %}') format('woff2');
+}
+@font-face {
+  font-family: 'Playfair Display';
+  font-style: normal;
+  font-weight: 600 700;
+  font-display: swap;
+  src: url('{% static "fonts/playfair-display-normal.woff2" %}') format('woff2');
+}
+@font-face {
+  font-family: 'Playfair Display';
+  font-style: italic;
+  font-weight: 600;
+  font-display: swap;
+  src: url('{% static "fonts/playfair-display-italic.woff2" %}') format('woff2');
+}
+</style>
 <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
 <noscript><link href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css" rel="stylesheet"></noscript>
 <link rel="stylesheet" href="{% static 'css/style.css' %}">

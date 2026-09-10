@@ -26,8 +26,8 @@
             <p class="eyebrow">About Us</p>
             <h2>A trusted bridge between Xuping and India's reseller network.</h2>
             <picture>
-                <source srcset="{% static 'images/about-model.webp' %}" type="image/webp">
-                <img src="{% static 'images/about-model.jpg' %}" alt="Model wearing everyday Xuping gold-plated jewellery" data-aos="fade-right">
+                <source srcset="{% static 'images/about-model-mobile.webp' %} 500w, {% static 'images/about-model.webp' %} 900w" sizes="(max-width: 800px) 100vw, 550px" type="image/webp">
+                <img srcset="{% static 'images/about-model-mobile.jpg' %} 500w, {% static 'images/about-model.jpg' %} 900w" sizes="(max-width: 800px) 100vw, 550px" src="{% static 'images/about-model.jpg' %}" alt="Model wearing everyday Xuping gold-plated jewellery" data-aos="fade-right">
             </picture>
         </div>
         <div class="about-text-col" data-aos="fade-left">
