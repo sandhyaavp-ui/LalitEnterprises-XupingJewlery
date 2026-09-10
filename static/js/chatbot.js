@@ -22,7 +22,7 @@
     {
       q: 'Minimum order quantity & amount',
       keywords: ['moq', 'minimum', 'quantity', 'amount', 'mop'],
-      a: 'Our standard minimum is 6 pieces per design for Bali, Stud and Bracelet collections. For Kada, Ring, Chain, Pendant Chain and Adjustable Bracelet, the minimum is 2 pieces per design. Across all designs combined, your total order must add up to at least ₹20,000.'
+      a: 'Our standard minimum is 6 pieces per design for Bali, Ring and Stud collections. For Bracelet, Kada, Chain, Pendant Chain and Adjustable Bracelet, the minimum is 2 pieces per design. Across all designs combined, your total order must add up to at least ₹20,000.'
     },
     {
       q: 'How do I place an order?',

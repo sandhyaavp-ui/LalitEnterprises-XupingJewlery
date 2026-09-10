@@ -9,7 +9,7 @@
   "@context": "https://schema.org",
   "@type": "Product",
   "name": "{{ product.name|escapejs }}",
-  "image": "{{ product.image.url|cloudinary_optimize|escapejs }}",
+  {% if product.image %}"image": "{{ product.image.url|cloudinary_optimize|escapejs }}",{% endif %}
   "description": "{% if product.description %}{{ product.description|escapejs }}{% else %}{{ product.name|escapejs }} — wholesale {{ product.collection.name|escapejs }} jewellery from Lalit Enterprises.{% endif %}",
   "brand": {
     "@type": "Brand",
@@ -78,7 +78,7 @@
     <p class="product-disclaimer">Reference design — real stock, monthly fresh designs, confirmed on your call.</p>
     <p>{{ product.description }}</p>
 
-    <div class="moq-pill">Our Minimum order quantity is 6pcs of each design. Minimum amount of ₹20,000.</div>
+    <div class="moq-pill">Minimum order for this design: {{ product.moq }} pcs. Minimum order value ₹20,000.</div>
 
     <a href="{{ whatsapp_url }}" class="btn btn-primary">
       <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
