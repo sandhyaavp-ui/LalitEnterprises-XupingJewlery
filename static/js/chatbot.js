@@ -80,6 +80,22 @@
   var enquiry = { name: '', phone: '', message: '' };
   var videoCallState = { full_name: '', phone: '', location: '', date: '', time: '' };
   var TIME_SLOTS = ['11:00 AM', '12:00 PM', '1:00 PM', '2:00 PM', '3:00 PM', '4:00 PM', '5:00 PM'];
+  var DISCLAIMER = 'Before we confirm: I understand and agree to Lalit Enterprises\' MOQ (Minimum Order Quantity of 6pcs per design for Bali, Ring & Stud, or 2pcs for other collections) and MOP (Minimum Order Amount of ₹20,000) policy for wholesale orders.';
+
+  // Shows the same MOQ/MOP disclaimer used on the Book a Video Call page
+  // before actually submitting anything, since the chatbot skips that
+  // page's checkbox entirely otherwise.
+  function confirmDisclaimer(onAgree) {
+    addMessage(DISCLAIMER, 'bot');
+    addQuickReplies([
+      { label: 'Yes, I agree', onClick: function () { addMessage('Yes, I agree', 'user'); onAgree(); } },
+      { label: 'No', onClick: function () {
+        addMessage('No', 'user');
+        addMessage('No problem — you\'ll need to agree to this policy before we can confirm. You can start again anytime.', 'bot');
+        showMenu();
+      } }
+    ]);
+  }
 
   function getCookie(name) {
     var match = document.cookie.match('(^|;)\\s*' + name + '\\s*=\\s*([^;]+)');
@@ -113,6 +129,13 @@
 
   function addQuickReplies(options) {
     var body = document.getElementById('xj-chat-body');
+    // Old quick-reply sets stay visible as chat history but must stop being
+    // clickable — otherwise a stale button (e.g. an earlier "Yes, I agree")
+    // can still fire against whatever the shared enquiry/videoCallState
+    // object holds by the time it's clicked, long after that step passed.
+    body.querySelectorAll('.xj-quick-btn').forEach(function (btn) {
+      btn.disabled = true;
+    });
     var wrap = el('div', 'xj-quick-replies');
     options.forEach(function (opt) {
       var btn = el('button', 'xj-quick-btn', opt.label);
@@ -264,7 +287,8 @@
     }
     if (state === 'enquiry-message') {
       enquiry.message = text;
-      submitEnquiry();
+      state = 'menu';
+      confirmDisclaimer(submitEnquiry);
       return;
     }
 
@@ -329,8 +353,7 @@
         return { label: slot, onClick: function () {
           addMessage(slot, 'user');
           videoCallState.time = slot;
-          addMessage('Great — confirming your booking now.', 'bot');
-          submitVideoCallBooking();
+          confirmDisclaimer(submitVideoCallBooking);
         }};
       }));
       return;

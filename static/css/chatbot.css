@@ -116,6 +116,7 @@
 }
 
 .xj-quick-btn:hover { background: var(--color-gold); color: var(--color-bg); }
+.xj-quick-btn:disabled { opacity: 0.5; cursor: default; pointer-events: none; }
 
 .xj-chat-input-row {
   display: flex;
