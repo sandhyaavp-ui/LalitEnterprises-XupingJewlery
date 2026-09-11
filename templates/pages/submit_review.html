@@ -1,6 +1,28 @@
 {% extends 'base.html' %}
 {% block title %}Share Your Experience — Lalit Enterprises{% endblock %}
 {% block meta_description %}Leave a review for Lalit Enterprises, sharing your experience as a Xuping jewellery wholesale reseller.{% endblock %}
+{% block structured_data %}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "Home",
+      "item": "https://lalitenterprise.in/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "Share Your Experience",
+      "item": "https://lalitenterprise.in{% url 'pages:submit_review' %}"
+    }
+  ]
+}
+</script>
+{% endblock %}
 {% block content %}
 <section class="section">
     <div class="form-wrapper">
