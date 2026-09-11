@@ -109,9 +109,14 @@
 {% if messages %}
 <div class="container">
     {% for message in messages %}
-    <div class="alert alert-{{ message.tags }}">{{ message }}</div>
+    <div class="alert alert-{{ message.level_tag }}"{% if message.extra_tags %} data-ga-event="{{ message.extra_tags }}"{% endif %}>{{ message }}</div>
     {% endfor %}
 </div>
+<script>
+  document.querySelectorAll('[data-ga-event]').forEach(function (el) {
+    if (typeof gtag === 'function') gtag('event', el.dataset.gaEvent);
+  });
+</script>
 {% endif %}
 
 <main>

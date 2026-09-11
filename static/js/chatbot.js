@@ -204,6 +204,7 @@
     })
       .then(function (res) { return res.ok ? res.json() : Promise.reject(); })
       .then(function () {
+        if (typeof gtag === 'function') gtag('event', 'enquiry_submitted');
         addMessage('Thanks, ' + enquiry.name + '! We reply the same working day. For the fastest response, message us on WhatsApp.', 'bot');
         addQuickReplies([
           { label: 'WhatsApp us', onClick: function () { window.open(WHATSAPP_URL, '_blank'); } },
@@ -238,6 +239,7 @@
     })
       .then(function (res) { return res.ok ? res.json() : Promise.reject(); })
       .then(function () {
+        if (typeof gtag === 'function') gtag('event', 'video_call_booked');
         addMessage('You’re booked in, ' + videoCallState.full_name + '! We’ll confirm by phone. You can also see this under "Your calls" on the Book a Video Call page.', 'bot');
         showMenu();
       })

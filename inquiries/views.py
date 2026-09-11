@@ -51,7 +51,7 @@ def contact(request):
                     f"Message: {cd.get('message') or '(not provided)'}"
                 ),
             )
-            messages.success(request, "Thanks for your enquiry — we reply the same working day.")
+            messages.success(request, "Thanks for your enquiry — we reply the same working day.", extra_tags="enquiry_submitted")
             return redirect('inquiries:contact')
     elif request.method == 'POST' and 'submit_appointment' in request.POST:
         enquiry_form = ContactForm()
@@ -72,7 +72,7 @@ def contact(request):
                     f"Preferred Time: {booking.preferred_time}"
                 ),
             )
-            messages.success(request, "Your appointment request has been received — we'll confirm by phone.")
+            messages.success(request, "Your appointment request has been received — we'll confirm by phone.", extra_tags="appointment_requested")
             return redirect('inquiries:contact')
     else:
         enquiry_form = ContactForm()
@@ -105,7 +105,8 @@ def order_form(request):
 
             messages.success(
                 request,
-                "Your order has been submitted. Our team will reach out on WhatsApp to confirm payment and dispatch."
+                "Your order has been submitted. Our team will reach out on WhatsApp to confirm payment and dispatch.",
+                extra_tags="order_submitted"
             )
             return redirect('inquiries:order_form')
     else:

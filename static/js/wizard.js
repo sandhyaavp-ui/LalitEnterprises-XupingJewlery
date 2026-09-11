@@ -72,6 +72,7 @@
     })
       .then(function (res) { return res.ok ? res.json() : Promise.reject(); })
       .then(function () {
+        if (typeof gtag === 'function') gtag('event', 'video_call_booked');
         document.getElementById('wiz-confirm-panel').innerHTML =
           '<h3>Call requested!</h3><p>We’ll confirm your slot by phone. You can see it under “Your calls” below.</p>';
         loadMyCalls();

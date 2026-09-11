@@ -45,7 +45,7 @@ def submit_review(request):
         form = TestimonialForm(request.POST)
         if form.is_valid():
             form.save()
-            messages.success(request, "Thanks for sharing your experience — your review will appear once it's checked.")
+            messages.success(request, "Thanks for sharing your experience — your review will appear once it's checked.", extra_tags="review_submitted")
             return redirect('pages:about')
     else:
         form = TestimonialForm()
