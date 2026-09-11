@@ -8,9 +8,10 @@ class Collection(models.Model):
     description = models.TextField(blank=True)
     image = models.ImageField(upload_to='collections/', blank=True, null=True)
     default_moq = models.PositiveIntegerField(default=6)
+    display_order = models.PositiveIntegerField(default=0)
 
     class Meta:
-        ordering = ['name']
+        ordering = ['display_order', 'name']
 
     def __str__(self):
         return self.name
