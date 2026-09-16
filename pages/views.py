@@ -14,10 +14,20 @@ def home(request):
 def about(request):
     collections = Collection.objects.all()
     testimonials = Testimonial.objects.filter(approved=True)
+    testimonials_data = [
+        {
+            'name': t.name,
+            'designation': 'Verified Reseller',
+            'quote': t.message,
+            'rating': t.rating,
+        }
+        for t in testimonials
+    ]
     review_form = TestimonialForm()
     return render(request, 'pages/about.html', {
         'collections': collections,
         'testimonials': testimonials,
+        'testimonials_data': testimonials_data,
         'review_form': review_form,
     })
 
