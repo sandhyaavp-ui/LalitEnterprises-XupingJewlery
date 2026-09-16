@@ -262,7 +262,7 @@ a { transition: color 0.2s ease; }
 }
 
 @media (max-width: 600px) {
-  .blog-grid { grid-template-columns: 1fr; }
+  .blog-grid { gap: var(--space-2); }
 }
 
 .card img {
@@ -451,8 +451,34 @@ textarea.form-control { resize: vertical; min-height: 100px; }
   padding: var(--space-3);
 }
 
-@media (max-width: 800px) {
-  .two-col-forms { grid-template-columns: 1fr; }
+@media (max-width: 600px) {
+  .two-col-forms {
+    gap: var(--space-2);
+    padding: var(--space-3) var(--space-2);
+  }
+
+  .two-col-forms .form-wrapper {
+    padding: var(--space-2);
+  }
+
+  .two-col-forms .form-wrapper h3,
+  .two-col-forms .form-wrapper .section-title {
+    font-size: 1rem;
+  }
+
+  .two-col-forms .form-group label {
+    font-size: 0.78rem;
+  }
+
+  .two-col-forms .form-control {
+    padding: 8px 10px;
+    font-size: 0.85rem;
+  }
+
+  .two-col-forms .btn {
+    padding: 10px 14px;
+    font-size: 0.85rem;
+  }
 }
 
 .order-items {
@@ -747,6 +773,77 @@ textarea.form-control { resize: vertical; min-height: 100px; }
   }
 }
 
+/* Testimonial cards ("Hear from our resellers") — same 2-column-at-every-
+   width treatment as .collection-card-grid / .feature-card-grid, so two
+   reviews sit side by side even on mobile instead of stacking full-width. */
+.card-grid.testimonial-card-grid {
+  grid-template-columns: repeat(2, 1fr);
+  gap: 14px;
+}
+
+.card-grid.testimonial-card-grid .card {
+  min-width: 0;
+}
+
+@media (max-width: 480px) {
+  .card-grid.testimonial-card-grid {
+    gap: 10px;
+  }
+
+  .card-grid.testimonial-card-grid .card {
+    padding: 10px;
+  }
+
+  .card-grid.testimonial-card-grid .stars {
+    font-size: 0.85rem;
+  }
+
+  .card-grid.testimonial-card-grid p {
+    font-size: 0.8rem;
+  }
+}
+
+/* Contact method cards (WhatsApp / Call / Instagram) — kept in a single
+   row of 3 at every width, including mobile, rather than stacking. */
+.card-grid.contact-methods-grid {
+  grid-template-columns: repeat(3, 1fr);
+  gap: 14px;
+}
+
+.card-grid.contact-methods-grid .card {
+  min-width: 0;
+}
+
+@media (max-width: 600px) {
+  .card-grid.contact-methods-grid {
+    gap: 8px;
+  }
+
+  .card-grid.contact-methods-grid .card {
+    padding: 8px;
+  }
+
+  .card-grid.contact-methods-grid .card-icon {
+    width: 32px;
+    height: 32px;
+  }
+
+  .card-grid.contact-methods-grid .card h3 {
+    font-size: 0.85rem;
+    margin-bottom: 2px;
+  }
+
+  .card-grid.contact-methods-grid .card p {
+    font-size: 0.72rem;
+    margin-bottom: 8px;
+  }
+
+  .card-grid.contact-methods-grid .card .btn {
+    padding: 6px 10px;
+    font-size: 0.72rem;
+  }
+}
+
 /* ---- Blog cards ---- */
 .blog-date, .blog-meta { color: var(--color-text-muted); font-size: 0.85rem; margin: 0 0 var(--space-2); }
 
@@ -825,6 +922,13 @@ textarea.form-control { resize: vertical; min-height: 100px; }
   grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
   gap: var(--space-3);
   margin-bottom: var(--space-4);
+}
+
+@media (max-width: 640px) {
+  .footer-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--space-2);
+  }
 }
 
 .footer-links { list-style: none; margin: 0; padding: 0; }

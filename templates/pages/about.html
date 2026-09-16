@@ -148,7 +148,7 @@
         </div>
         <p class="text-center">More real customer stories on <a href="https://www.instagram.com/xupingjewelery_india" target="_blank" rel="noopener">@xupingjewelery_india</a>.</p>
         {% if testimonials %}
-        <div class="card-grid">
+        <div class="card-grid testimonial-card-grid">
             {% for t in testimonials %}
             <div class="card" data-aos="zoom-in" data-aos-delay="{% widthratio forloop.counter0 1 50 %}">
                 <div class="stars">{% for i in "12345" %}{% if forloop.counter <= t.rating %}★{% else %}☆{% endif %}{% endfor %}</div>
