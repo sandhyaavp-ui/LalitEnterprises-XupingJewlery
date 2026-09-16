@@ -619,7 +619,17 @@ textarea.form-control { resize: vertical; min-height: 100px; }
 }
 
 /* ---- Product cards ---- */
-.product-moq { font-weight: 400; color: var(--color-text-muted); font-size: 0.82rem; margin: 0 0 var(--space-1); }
+.product-moq {
+  display: inline-block;
+  font-weight: 600;
+  color: var(--color-gold);
+  background: var(--color-bg-alt);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-pill);
+  font-size: 0.75rem;
+  padding: 3px 10px;
+  margin: 0 0 var(--space-1);
+}
 
 /* Product grids show 2 per row at every screen width (cards shrink further
    below 400px instead of dropping to 1 column), since these lists can hold
@@ -636,12 +646,39 @@ textarea.form-control { resize: vertical; min-height: 100px; }
      this grid item's min-content size, which forces the 1fr column wider
      than the grid and overflows the page on narrow phones. */
   min-width: 0;
+  transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+}
+
+/* Lift-on-hover only for devices with real hover (mouse/trackpad) — guarding
+   this avoids the classic mobile issue where an unguarded :hover on a link
+   makes the first tap "hover" instead of navigating, requiring a second tap. */
+@media (hover: hover) and (pointer: fine) {
+  .product-card-grid .card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 16px 32px rgba(0, 0, 0, 0.35);
+    border-color: var(--color-gold-dim);
+  }
+
+  .product-card-grid .card:hover img { transform: scale(1.05); }
+}
+
+/* Touch equivalent: a quick press-down scale on tap instead of a hover lift */
+@media (hover: none) {
+  .product-card-grid .card:active {
+    transform: scale(0.97);
+    border-color: var(--color-gold-dim);
+    transition: transform 0.1s ease, border-color 0.1s ease;
+  }
 }
 
 .product-card-grid .card img,
 .product-card-grid .card-image-placeholder {
   aspect-ratio: 5 / 4;
   margin-bottom: 8px;
+  object-fit: contain;
+  background: var(--color-bg-alt);
+  border-radius: var(--radius-sm);
+  transition: transform 0.3s ease;
 }
 
 .product-card-grid .card h3 {
