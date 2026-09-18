@@ -37,6 +37,7 @@
 
   --radius-sm: 8px;
   --radius-md: 12px;
+  --radius-lg: 18px;
   --radius-pill: 999px;
 
   --shadow-soft: 0 8px 30px rgba(0, 0, 0, 0.4);
@@ -435,9 +436,9 @@ textarea.form-control { resize: vertical; min-height: 100px; }
 
 .two-col-forms {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 1fr;
   gap: var(--space-4);
-  max-width: 1000px;
+  max-width: 640px;
   margin: 0 auto;
   padding: var(--space-4) var(--space-3);
   align-items: start;
@@ -451,33 +452,38 @@ textarea.form-control { resize: vertical; min-height: 100px; }
   padding: var(--space-3);
 }
 
+/* Pricing-card-style chrome (rounded card, bordered intro box, arrow
+   button) applied to the enquiry/appointment forms. */
+.two-col-forms .form-wrapper.pricing-style-card {
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-card);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.form-intro-box {
+  border-top: 1px solid var(--color-border);
+  border-bottom: 1px solid var(--color-border);
+  padding: var(--space-2) 0;
+  text-align: center;
+  margin: 0 0 var(--space-2);
+}
+
+.btn-with-arrow {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  width: 100%;
+  margin-top: auto;
+}
+
+.btn-with-arrow svg { flex-shrink: 0; }
+
 @media (max-width: 600px) {
   .two-col-forms {
-    gap: var(--space-2);
     padding: var(--space-3) var(--space-2);
-  }
-
-  .two-col-forms .form-wrapper {
-    padding: var(--space-2);
-  }
-
-  .two-col-forms .form-wrapper h3,
-  .two-col-forms .form-wrapper .section-title {
-    font-size: 1rem;
-  }
-
-  .two-col-forms .form-group label {
-    font-size: 0.78rem;
-  }
-
-  .two-col-forms .form-control {
-    padding: 8px 10px;
-    font-size: 0.85rem;
-  }
-
-  .two-col-forms .btn {
-    padding: 10px 14px;
-    font-size: 0.85rem;
   }
 }
 
@@ -851,33 +857,85 @@ textarea.form-control { resize: vertical; min-height: 100px; }
   min-width: 0;
 }
 
+/* On mobile, the 3 contact methods become a single-card carousel (one
+   card visible at a time, swapped via dots/arrows) instead of a shrunk
+   3-column row — easier to read/tap on a small screen. */
 @media (max-width: 600px) {
   .card-grid.contact-methods-grid {
-    gap: 8px;
+    display: block;
+    position: relative;
   }
 
   .card-grid.contact-methods-grid .card {
-    padding: 8px;
+    display: none;
+    text-align: center;
+    animation: cmFadeIn 0.3s ease;
+  }
+
+  .card-grid.contact-methods-grid .card.is-active {
+    display: block;
   }
 
   .card-grid.contact-methods-grid .card-icon {
-    width: 32px;
-    height: 32px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+}
+
+@keyframes cmFadeIn {
+  from { opacity: 0; transform: translateY(6px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.contact-methods-carousel-nav {
+  display: none;
+}
+
+@media (max-width: 600px) {
+  .contact-methods-carousel-nav {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-2);
+    margin-top: var(--space-2);
   }
 
-  .card-grid.contact-methods-grid .card h3 {
-    font-size: 0.85rem;
-    margin-bottom: 2px;
+  .contact-methods-carousel-nav .ct-arrow {
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--color-bg-card);
+    border: 1px solid var(--color-border);
+    color: var(--color-gold);
+    cursor: pointer;
+    transition: background-color 0.2s ease, color 0.2s ease;
   }
 
-  .card-grid.contact-methods-grid .card p {
-    font-size: 0.72rem;
-    margin-bottom: 8px;
+  .contact-methods-carousel-nav .ct-arrow:hover {
+    background: var(--color-gold);
+    color: var(--color-bg);
   }
 
-  .card-grid.contact-methods-grid .card .btn {
-    padding: 6px 10px;
-    font-size: 0.72rem;
+  .carousel-dots {
+    display: flex;
+    gap: 8px;
+  }
+
+  .carousel-dots button {
+    width: 9px;
+    height: 9px;
+    border-radius: 50%;
+    border: none;
+    padding: 0;
+    background: var(--color-border);
+    cursor: pointer;
+  }
+
+  .carousel-dots button.is-active {
+    background: var(--color-gold);
   }
 }
 
