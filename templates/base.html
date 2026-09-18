@@ -132,6 +132,7 @@
 </main>
 
 <footer class="site-footer">
+    <div class="footer-mobile-only">
     <div class="container footer-intro">
         <h3 class="footer-logo"><img src="{% static 'images/favicon.png' %}" alt="" class="logo-mark">Lalit Enterprises</h3>
         <p>Authorised Xuping wholesale agent in Chennai — everyday-wear imitation jewellery for resellers and retailers across India.</p>
@@ -206,6 +207,72 @@
             </a>
         </div>
         <p>© 2026 Lalit Enterprises. Authorised Xuping agent, Chennai.</p>
+    </div>
+    </div>
+
+    <div class="footer-desktop-only">
+    <div class="container">
+        <div class="footer-card">
+            <div class="footer-grid">
+                <div class="footer-col">
+                    <h3 class="footer-logo"><img src="{% static 'images/favicon.png' %}" alt="" class="logo-mark">Lalit Enterprises</h3>
+                    <p>Authorised Xuping wholesale agent in Chennai — everyday-wear imitation jewellery for resellers and retailers across India.</p>
+                    <p class="footer-moq">Minimum order: 6pcs per design for Bali, Ring &amp; Stud, or 2pcs for other collections. Minimum order value ₹20,000.</p>
+                </div>
+                <div class="footer-col">
+                    <h4>Explore</h4>
+                    <ul class="footer-links">
+                        <li><a href="{% url 'pages:home' %}">Home</a></li>
+                        <li><a href="{% url 'pages:about' %}">About</a></li>
+                        <li><a href="{% url 'catalog:product_list' %}">Products</a></li>
+                        <li><a href="{% url 'pages:blogs' %}">Blogs</a></li>
+                        <li><a href="{% url 'inquiries:video_call_booking' %}">Book Video Call</a></li>
+                        <li><a href="{% url 'inquiries:contact' %}">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Reach Us</h4>
+                    <ul class="footer-links">
+                        <li><a href="tel:+919841066880">098410 66880</a></li>
+                        <li>Chennai, Tamil Nadu</li>
+                        <li>Monday to Saturday · 11:00 AM – 6:00 PM</li>
+                        <li><a href="https://wa.me/919841066880" target="_blank" rel="noopener">WhatsApp us</a></li>
+                    </ul>
+                    <address>
+                        39/2 EK, Agraharam St, Edapalaiyam, Park Town,<br>
+                        Chennai, Greater Chennai, Tamil Nadu 600003
+                    </address>
+                    <iframe
+                        class="footer-map"
+                        title="Google Maps location of Lalit Enterprises, Chennai"
+                        src="https://www.google.com/maps?q=Xuping+Jewelery+India+agent+LALIT+ENTERPRISES&output=embed"
+                        loading="lazy"
+                        referrerpolicy="no-referrer-when-downgrade">
+                    </iframe>
+                </div>
+                <div class="footer-col">
+                    <h4>More</h4>
+                    <ul class="footer-links">
+                        <li><a href="https://wa.me/919841066880" target="_blank" rel="noopener">WhatsApp</a></li>
+                        <li><a href="https://www.instagram.com/xupingjewelery_india" target="_blank" rel="noopener">Instagram</a></li>
+                        <li><a href="{% url 'pages:terms' %}">Terms of Service</a></li>
+                        <li><a href="{% url 'pages:privacy' %}">Privacy Policy</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container footer-bottom-card">
+        <p>© 2026 Lalit Enterprises. Authorised Xuping agent, Chennai.</p>
+        <div class="footer-social-icons">
+            <a href="https://www.instagram.com/xupingjewelery_india" target="_blank" rel="noopener" aria-label="Instagram">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="0.75" fill="currentColor" stroke="none"/></svg>
+            </a>
+            <a href="https://wa.me/919841066880" target="_blank" rel="noopener" aria-label="WhatsApp">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5Z"/></svg>
+            </a>
+        </div>
+    </div>
     </div>
 </footer>
 
