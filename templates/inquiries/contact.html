@@ -89,7 +89,7 @@
             <form method="post">
                 {% csrf_token %}
                 {% for field in enquiry_form %}
-                <div class="form-group">
+                <div class="form-group{% if field.errors %} has-error{% endif %}">
                     <label for="{{ field.id_for_label }}">{{ field.label }}</label>
                     {{ field }}
                     {% if field.errors %}<p class="form-error">{{ field.errors|striptags }}</p>{% endif %}
@@ -108,7 +108,7 @@
             <form method="post">
                 {% csrf_token %}
                 {% for field in appointment_form %}
-                <div class="form-group">
+                <div class="form-group{% if field.errors %} has-error{% endif %}">
                     <label for="{{ field.id_for_label }}">{{ field.label }}</label>
                     {{ field }}
                     {% if field.errors %}<p class="form-error">{{ field.errors|striptags }}</p>{% endif %}
