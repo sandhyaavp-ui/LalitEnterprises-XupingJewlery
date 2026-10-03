@@ -5,7 +5,7 @@ from django.conf.urls.static import static
 from django.contrib.sitemaps.views import sitemap
 
 from inquiries import admin_views
-from pages.views import robots_txt
+from pages.views import robots_txt, llms_txt, llms_full_txt
 from .sitemaps import StaticViewSitemap, ProductSitemap, CollectionSitemap, BlogSitemap
 
 sitemaps = {
@@ -26,6 +26,8 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('sitemap.xml', sitemap, {'sitemaps': sitemaps}, name='django.contrib.sitemaps.views.sitemap'),
     path('robots.txt', robots_txt, name='robots_txt'),
+    path('llms.txt', llms_txt, name='llms_txt'),
+    path('llms-full.txt', llms_full_txt, name='llms_full_txt'),
     path('', include('pages.urls')),
     path('', include('catalog.urls')),
     path('', include('inquiries.urls')),
